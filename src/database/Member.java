@@ -10,7 +10,12 @@ import java.sql.*;
  * @author Farhan
  */
 public class Member {
-    private static final String tableName = "member";
+    public static final String TABLE_NAME = "member";
+    public static final String ID = "id";
+    public static final String NAMA = "nama";
+    public static final String ALAMAT = "alamat";
+    public static final String TGL_LAHIR = "tgl_lahir";
+    public static final String POINT = "point";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -18,16 +23,16 @@ public class Member {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS "+tableName+" (\n" +
-                    "    id INT NOT NULL AUTO_INCREMENT,\n" +
-                    "    nama VARCHAR(100) NOT NULL,\n" +
-                    "    alamat TEXT NOT NULL,\n" +
-                    "    tgl_lahir DATE NOT NULL,\n" +
-                    "    point INT,\n" +
-                    "    PRIMARY KEY (id)\n" +
+            String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n" +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    NAMA+" VARCHAR(100) NOT NULL,\n" +
+                    ALAMAT+" TEXT NOT NULL,\n" +
+                    TGL_LAHIR+" DATE NOT NULL,\n" +
+                    POINT+" INT,\n" +
+                    "    PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
-            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
+            String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
             statement.executeUpdate(dropQuery);
 
@@ -65,7 +70,7 @@ public class Member {
             {"004", "fooFake4", "alamat4", "", "100"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+tableName+" values(?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);

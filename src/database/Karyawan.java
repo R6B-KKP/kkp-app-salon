@@ -10,7 +10,11 @@ import java.sql.*;
  * @author Farha
  */
 public class Karyawan {
-    private static final String tableName = "karyawan";
+    public static final String TABLE_NAME = "karyawan";
+    public static final String ID = "id";
+    public static final String NAMA = "nama";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -18,12 +22,12 @@ public class Karyawan {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" +
-                    "id INT NOT NULL AUTO_INCREMENT , nama VARCHAR(100) NOT NULL , "
-                    + "username VARCHAR(50) NOT NULL , password VARCHAR(50) NOT NULL , "
+            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
+                    ID+" INT NOT NULL AUTO_INCREMENT , "+NAMA+" VARCHAR(100) NOT NULL , "
+                    +USERNAME+" VARCHAR(50) NOT NULL , "+PASSWORD+" VARCHAR(50) NOT NULL , "
                     + "PRIMARY KEY (id)) ENGINE = InnoDB";
 
-            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
+            String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
             statement.executeUpdate(dropQuery);
 
@@ -61,7 +65,7 @@ public class Karyawan {
             {"004", "fooFake4", "admin4", "admin4"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+tableName+" values(?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);

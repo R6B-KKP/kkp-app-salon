@@ -14,7 +14,11 @@ import java.sql.Statement;
  * @author Farhan
  */
 public class Layanan {
-    private static final String tableName = "layanan";
+    public static final String TABLE_NAME = "layanan";
+    public static final String ID = "id";
+    public static final String NAMA = "nama";
+    public static final String HARGA = "harga";
+    public static final String POINT = "point";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -22,15 +26,15 @@ public class Layanan {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS "+tableName+" (\n" +
-                    "    id INT NOT NULL AUTO_INCREMENT,\n" +
-                    "    nama VARCHAR(100) NOT NULL,\n" +
-                    "    harga INT NOT NULL,\n" +
-                    "    point INT(4),\n" +
-                    "    PRIMARY KEY (id)\n" +
+            String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n " +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    NAMA+" VARCHAR(100) NOT NULL,\n" +
+                    HARGA+" INT NOT NULL,\n" +
+                    POINT+" INT(4),\n" +
+                    "PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
-            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
+            String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
             statement.executeUpdate(dropQuery);
 
@@ -39,7 +43,7 @@ public class Layanan {
             System.out.println("Tabel berhasil dibuat!");
 
         } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan saat membuat tabel!");
+            System.out.println("Terjadi kesalahan saat membuat tabel! "+e.getMessage());
         } finally {
             // Menutup statement
             if (statement != null) {
@@ -68,7 +72,7 @@ public class Layanan {
             {"004", "fooFake4", "150000", "100"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+tableName+" values(?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
@@ -84,5 +88,6 @@ public class Layanan {
     public static void main(String[] args) throws InterruptedException {
         new Layanan().createTable();
         new Layanan().createFakeData();
+        System.out.println(Layanan.TABLE_NAME);
     }
 }

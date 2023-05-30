@@ -14,7 +14,10 @@ import java.sql.Statement;
  * @author Farhan
  */
 public class TransaksiDetail {
-    private static final String tableName = "transaksi_detail";
+    public static final String TABLE_NAME = "transaksi_detail";
+    public static final String ID = "id";
+    public static final String ID_LAYANAN = "id_layanan";
+    public static final String ID_TRANSAKSI = "id_transaksi";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -22,16 +25,16 @@ public class TransaksiDetail {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" +
-                    " id INT NOT NULL AUTO_INCREMENT,\n" +
-                    " id_layanan INT,\n" +
-                    " id_transaksi INT,\n" +
-                    " PRIMARY KEY (id),\n" +
-                    " FOREIGN KEY (id_layanan) REFERENCES layanan(id),\n" +
-                    " FOREIGN KEY (id_transaksi) REFERENCES transaksi(id)\n" +
+            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n" +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    ID_LAYANAN+" INT,\n" +
+                    ID_TRANSAKSI+" INT,\n" +
+                    " PRIMARY KEY ("+ID+"),\n" +
+                    " FOREIGN KEY ("+ID_LAYANAN+") REFERENCES "+Layanan.TABLE_NAME+"("+Layanan.ID+") ON DELETE CASCADE,\n" +
+                    " FOREIGN KEY ("+ID_TRANSAKSI+") REFERENCES "+Transaksi.TABLE_NAME+"("+Transaksi.ID+") ON DELETE CASCADE\n" +
                     ") ENGINE = InnoDB;";
 
-            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
+            String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
             statement.executeUpdate(dropQuery);
 
@@ -40,7 +43,7 @@ public class TransaksiDetail {
             System.out.println("Tabel berhasil dibuat!");
 
         } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan saat membuat tabel!");
+            System.out.println("Terjadi kesalahan saat membuat tabel! :"+e.getMessage());
         } finally {
             // Menutup statement
             if (statement != null) {
@@ -69,7 +72,7 @@ public class TransaksiDetail {
             {"004", "4", "4"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+tableName+" values(?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);

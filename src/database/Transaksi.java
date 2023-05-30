@@ -13,7 +13,12 @@ import java.sql.Statement;
  * @author Farhan
  */
 public class Transaksi {
-    private static final String tableName = "transaksi";
+    public static final String TABLE_NAME = "transaksi";
+    public static final String ID = "id";
+    public static final String ID_MEMBER = "id_member";
+    public static final String ID_KARYAWAN = "id_karyawan";
+    public static final String TOTAL_HARGA = "total_harga";
+    public static final String TANGGAL = "tanggal";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -21,18 +26,18 @@ public class Transaksi {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" +
-                    " id INT NOT NULL AUTO_INCREMENT,\n" +
-                    " id_member INT,\n" +
-                    " id_karyawan INT,\n" +
-                    " total_harga INT,\n" +
-                    " tanggal DATE,\n" +
-                    " PRIMARY KEY (id),\n" +
-                    " FOREIGN KEY (id_member) REFERENCES member(id),\n" +
-                    " FOREIGN KEY (id_karyawan) REFERENCES karyawan(id)\n" +
+            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n" +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    ID_MEMBER+" INT,\n" +
+                    ID_KARYAWAN+" INT,\n" +
+                    TOTAL_HARGA+" INT,\n" +
+                    TANGGAL+" DATE,\n" +
+                    " PRIMARY KEY ("+ID+"),\n" +
+                    " FOREIGN KEY ("+ID_MEMBER+") REFERENCES "+Member.TABLE_NAME+"("+Member.ID+") ON DELETE CASCADE,\n" +
+                    " FOREIGN KEY ("+ID_KARYAWAN+") REFERENCES "+Karyawan.TABLE_NAME+"("+Karyawan.ID+") ON DELETE CASCADE\n" +
                     ") ENGINE = InnoDB;";
 
-            String dropQuery = "DROP TABLE IF EXISTS " + tableName;
+            String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
             statement.executeUpdate(dropQuery);
 
@@ -41,7 +46,7 @@ public class Transaksi {
             System.out.println("Tabel berhasil dibuat!");
 
         } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan saat membuat tabel!");
+            System.out.println("Terjadi kesalahan saat membuat tabel! :"+e.getMessage());
         } finally {
             // Menutup statement
             if (statement != null) {
@@ -70,7 +75,7 @@ public class Transaksi {
             {"004", "4", "4", "150000", ""},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+tableName+" values(?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
