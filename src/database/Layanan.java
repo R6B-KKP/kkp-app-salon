@@ -18,7 +18,7 @@ public class Layanan {
     public static final String ID = "id";
     public static final String NAMA = "nama";
     public static final String HARGA = "harga";
-    public static final String POINT = "point";
+    public static final String POINT_PRICE = "point_price";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -30,7 +30,7 @@ public class Layanan {
                     ID+" INT NOT NULL AUTO_INCREMENT,\n" +
                     NAMA+" VARCHAR(100) NOT NULL,\n" +
                     HARGA+" INT NOT NULL,\n" +
-                    POINT+" INT(4),\n" +
+                    POINT_PRICE+" INT(4),\n" +
                     "PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 

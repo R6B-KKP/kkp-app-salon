@@ -25,7 +25,7 @@ public class Karyawan {
             String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                     ID+" INT NOT NULL AUTO_INCREMENT , "+NAMA+" VARCHAR(100) NOT NULL , "
                     +USERNAME+" VARCHAR(50) NOT NULL , "+PASSWORD+" VARCHAR(50) NOT NULL , "
-                    + "PRIMARY KEY (id)) ENGINE = InnoDB";
+                    + "PRIMARY KEY ("+ID+")) ENGINE = InnoDB";
 
             String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
