@@ -4,17 +4,21 @@
  */
 package database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 /**
  *
- * @author Farha
+ * @author Farhan
  */
-public class Karyawan {
-    public static final String TABLE_NAME = "karyawan";
+public class Transaksi {
+    public static final String TABLE_NAME = "transaksi";
     public static final String ID = "id";
-    public static final String NAMA = "nama";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
+    public static final String ID_MEMBER = "id_member";
+    public static final String ID_KARYAWAN = "id_karyawan";
+    public static final String TOTAL_HARGA = "total_harga";
+    public static final String TANGGAL = "tanggal";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -22,10 +26,16 @@ public class Karyawan {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                    ID+" INT NOT NULL AUTO_INCREMENT , "+NAMA+" VARCHAR(100) NOT NULL , "
-                    +USERNAME+" VARCHAR(50) NOT NULL , "+PASSWORD+" VARCHAR(50) NOT NULL , "
-                    + "PRIMARY KEY ("+ID+")) ENGINE = InnoDB";
+            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n" +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    ID_MEMBER+" INT,\n" +
+                    ID_KARYAWAN+" INT,\n" +
+                    TOTAL_HARGA+" INT,\n" +
+                    TANGGAL+" DATE,\n" +
+                    " PRIMARY KEY ("+ID+"),\n" +
+                    " FOREIGN KEY ("+ID_MEMBER+") REFERENCES "+Member.TABLE_NAME+"("+Member.ID+") ON DELETE CASCADE,\n" +
+                    " FOREIGN KEY ("+ID_KARYAWAN+") REFERENCES "+Karyawan.TABLE_NAME+"("+Karyawan.ID+") ON DELETE CASCADE\n" +
+                    ") ENGINE = InnoDB;";
 
             String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -36,7 +46,7 @@ public class Karyawan {
             System.out.println("Tabel berhasil dibuat!");
 
         } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan saat membuat tabel!");
+            System.out.println("Terjadi kesalahan saat membuat tabel! :"+e.getMessage());
         } finally {
             // Menutup statement
             if (statement != null) {
@@ -59,19 +69,20 @@ public class Karyawan {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "admin1", "admin1"},
-            {"002", "fooFake2", "admin2", "admin2"},
-            {"003", "fooFake3", "admin3", "admin3"},
-            {"004", "fooFake4", "admin4", "admin4"},
+            {"001", "1", "1", "200000", ""},
+            {"002", "2", "2", "300000", ""},
+            {"003", "3", "3", "250000", ""},
+            {"004", "4", "4", "150000", ""},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
                 statement.setString(3, fakeData[i][2]);
                 statement.setString(4, fakeData[i][3]);
+                statement.setDate(5, new java.sql.Date(new java.util.Date().getTime()));
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -79,7 +90,7 @@ public class Karyawan {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        new Karyawan().createTable();
-        new Karyawan().createFakeData();
+        new Transaksi().createTable();
+        new Transaksi().createFakeData();
     }
 }

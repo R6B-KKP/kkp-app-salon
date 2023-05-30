@@ -4,17 +4,21 @@
  */
 package database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
- * @author Farha
+ * @author Farhan
  */
-public class Karyawan {
-    public static final String TABLE_NAME = "karyawan";
+public class Layanan {
+    public static final String TABLE_NAME = "layanan";
     public static final String ID = "id";
     public static final String NAMA = "nama";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
+    public static final String HARGA = "harga";
+    public static final String POINT_PRICE = "point_price";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -22,10 +26,13 @@ public class Karyawan {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                    ID+" INT NOT NULL AUTO_INCREMENT , "+NAMA+" VARCHAR(100) NOT NULL , "
-                    +USERNAME+" VARCHAR(50) NOT NULL , "+PASSWORD+" VARCHAR(50) NOT NULL , "
-                    + "PRIMARY KEY ("+ID+")) ENGINE = InnoDB";
+            String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n " +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    NAMA+" VARCHAR(100) NOT NULL,\n" +
+                    HARGA+" INT NOT NULL,\n" +
+                    POINT_PRICE+" INT(4),\n" +
+                    "PRIMARY KEY ("+ID+")\n" +
+                    ") ENGINE = InnoDB;";
 
             String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -36,7 +43,7 @@ public class Karyawan {
             System.out.println("Tabel berhasil dibuat!");
 
         } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan saat membuat tabel!");
+            System.out.println("Terjadi kesalahan saat membuat tabel! "+e.getMessage());
         } finally {
             // Menutup statement
             if (statement != null) {
@@ -59,10 +66,10 @@ public class Karyawan {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "admin1", "admin1"},
-            {"002", "fooFake2", "admin2", "admin2"},
-            {"003", "fooFake3", "admin3", "admin3"},
-            {"004", "fooFake4", "admin4", "admin4"},
+            {"001", "fooFake1", "200000", "100"},
+            {"002", "fooFake2", "300000", "90"},
+            {"003", "fooFake3", "250000", "80"},
+            {"004", "fooFake4", "150000", "100"},
         };
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
@@ -79,7 +86,8 @@ public class Karyawan {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        new Karyawan().createTable();
-        new Karyawan().createFakeData();
+        new Layanan().createTable();
+        new Layanan().createFakeData();
+        System.out.println(Layanan.TABLE_NAME);
     }
 }

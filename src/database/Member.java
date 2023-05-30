@@ -7,14 +7,15 @@ package database;
 import java.sql.*;
 /**
  *
- * @author Farha
+ * @author Farhan
  */
-public class Karyawan {
-    public static final String TABLE_NAME = "karyawan";
+public class Member {
+    public static final String TABLE_NAME = "member";
     public static final String ID = "id";
     public static final String NAMA = "nama";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
+    public static final String ALAMAT = "alamat";
+    public static final String TGL_LAHIR = "tgl_lahir";
+    public static final String POINT = "point";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -22,10 +23,14 @@ public class Karyawan {
         try {
             statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                    ID+" INT NOT NULL AUTO_INCREMENT , "+NAMA+" VARCHAR(100) NOT NULL , "
-                    +USERNAME+" VARCHAR(50) NOT NULL , "+PASSWORD+" VARCHAR(50) NOT NULL , "
-                    + "PRIMARY KEY ("+ID+")) ENGINE = InnoDB";
+            String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n" +
+                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    NAMA+" VARCHAR(100) NOT NULL,\n" +
+                    ALAMAT+" TEXT NOT NULL,\n" +
+                    TGL_LAHIR+" DATE NOT NULL,\n" +
+                    POINT+" INT,\n" +
+                    "    PRIMARY KEY ("+ID+")\n" +
+                    ") ENGINE = InnoDB;";
 
             String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -59,19 +64,20 @@ public class Karyawan {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "admin1", "admin1"},
-            {"002", "fooFake2", "admin2", "admin2"},
-            {"003", "fooFake3", "admin3", "admin3"},
-            {"004", "fooFake4", "admin4", "admin4"},
+            {"001", "fooFake1", "alamat1", "", "30"},
+            {"002", "fooFake2", "alamat2", "", "50"},
+            {"003", "fooFake3", "alamat3", "", "70"},
+            {"004", "fooFake4", "alamat4", "", "100"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
                 statement.setString(3, fakeData[i][2]);
-                statement.setString(4, fakeData[i][3]);
+                statement.setDate(4, new java.sql.Date(new java.util.Date().getTime()));
+                statement.setString(5, fakeData[i][4]);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -79,7 +85,7 @@ public class Karyawan {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        new Karyawan().createTable();
-        new Karyawan().createFakeData();
+        new Member().createTable();
+        new Member().createFakeData();
     }
 }
