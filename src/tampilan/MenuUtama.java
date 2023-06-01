@@ -28,13 +28,24 @@ public class MenuUtama extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
         panelRound1 = new component.PanelRound();
         btn_menu_karyawan = new com.k33ptoo.components.KButton();
         btn_menu_member = new com.k33ptoo.components.KButton();
         btn_menu_layanan = new com.k33ptoo.components.KButton();
         btn_menu_transaksi = new com.k33ptoo.components.KButton();
         title = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,17 +115,6 @@ public class MenuUtama extends javax.swing.JFrame {
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 507, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,9 +122,7 @@ public class MenuUtama extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
@@ -135,18 +133,16 @@ public class MenuUtama extends javax.swing.JFrame {
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)))
+                        .addGap(554, 554, 554)))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+ 
     private void btn_menu_karyawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_karyawanActionPerformed
         // TODO add your handling code here:
-//        jPanel1(new MenuKaryawan().setVisible(true));
+//        jPanel1.setVisible(true);
     }//GEN-LAST:event_btn_menu_karyawanActionPerformed
 
     private void btn_menu_layananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_layananActionPerformed
@@ -170,7 +166,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_menu_layanan;
     private com.k33ptoo.components.KButton btn_menu_member;
     private com.k33ptoo.components.KButton btn_menu_transaksi;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JFrame jFrame1;
     private component.PanelRound panelRound1;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables

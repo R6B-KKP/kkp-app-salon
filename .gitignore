@@ -35,7 +35,8 @@ build/
 nbbuild/
 dist/
 nbdist/
-src/database/Koneksi.java
+**/nbproject/project.properties
+**/src/database/Koneksi.java
 .nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java
