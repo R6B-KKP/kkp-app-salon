@@ -4,7 +4,13 @@
  */
 package tampilan;
 
-import tampilan.Menu.MenuKaryawan;
+import database.Koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -15,8 +21,15 @@ public class MenuUtama extends javax.swing.JFrame {
     /**
      * Creates new form MenuUtama
      */
+    private Connection conn = new Koneksi().connect();
+    private DefaultTableModel tabmode;
+    
     public MenuUtama() {
         initComponents();
+        mainTable.setVisible(false);
+        title.setVisible(false);
+        btn_menu_tambah_data.setVisible(false);
+        
     }
 
     /**
@@ -35,6 +48,10 @@ public class MenuUtama extends javax.swing.JFrame {
         btn_menu_layanan = new com.k33ptoo.components.KButton();
         btn_menu_transaksi = new com.k33ptoo.components.KButton();
         title = new javax.swing.JLabel();
+        btn_menu_tambah_data = new com.k33ptoo.components.KButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mainTable = new javax.swing.JTable();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -113,7 +130,46 @@ public class MenuUtama extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("Data Member");
         title.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        btn_menu_tambah_data.setText("Tambahkan Data");
+        btn_menu_tambah_data.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_menu_tambah_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_menu_tambah_dataActionPerformed(evt);
+            }
+        });
+
+        mainTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(mainTable);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,19 +178,26 @@ public class MenuUtama extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
-                .addGap(32, 32, 32))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_menu_tambah_data, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(554, 554, 554)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_menu_tambah_data, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,20 +205,131 @@ public class MenuUtama extends javax.swing.JFrame {
  
     private void btn_menu_karyawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_karyawanActionPerformed
         // TODO add your handling code here:
-//        jPanel1.setVisible(true);
+        mainTable.setVisible(true);
+        title.setVisible(true);
+        btn_menu_tambah_data.setVisible(true);
+        btn_menu_karyawan.setBackground(btn_menu_member.getkPressedColor());
+        title.setText("Karyawan");
+        
+        Object[] Baris = {"No ID", "Nama Karyawan", "Username"};
+        tabmode = new DefaultTableModel(null, Baris);
+        mainTable.setModel(tabmode);
+        String sql = "select * from karyawan";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);            
+            while(hasil.next()){
+                
+                String a = hasil.getString("id");
+                String b = hasil.getString("nama");
+                String c = hasil.getString("username");
+                
+                String[] data = {a,b,c};
+                tabmode.addRow(data);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
+        }
     }//GEN-LAST:event_btn_menu_karyawanActionPerformed
 
     private void btn_menu_layananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_layananActionPerformed
         // TODO add your handling code here:
+        mainTable.setVisible(true);
+        title.setVisible(true);
+        btn_menu_tambah_data.setVisible(true);
+        btn_menu_layanan.setBackground(btn_menu_member.getkPressedColor());
+        title.setText("Layanan");
+        
+        Object[] Baris = {"No ID", "Nama Layanan", "Harga", "Point Price"};
+        tabmode = new DefaultTableModel(null, Baris);
+        mainTable.setModel(tabmode);
+        String sql = "select * from layanan";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);            
+            while(hasil.next()){
+                
+                String a = hasil.getString("id");
+                String b = hasil.getString("nama");
+                String c = hasil.getString("harga");
+                String d = hasil.getString("point_price");
+                
+                String[] data = {a,b,c, d};
+                tabmode.addRow(data);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
+        }
     }//GEN-LAST:event_btn_menu_layananActionPerformed
 
     private void btn_menu_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_memberActionPerformed
         // TODO add your handling code here:
+        mainTable.setVisible(true);
+        title.setVisible(true);
+        btn_menu_tambah_data.setVisible(true);
+        btn_menu_member.setBackground(btn_menu_member.getkPressedColor());
+        title.setText("Member");
+        
+        btn_menu_tambah_data.addActionListener((e) -> {
+            new FormMember().setVisible(true);
+        });
+        
+        Object[] Baris = {"No ID", "Nama Member", "Alamat", "Tanggal Lahir"};
+        tabmode = new DefaultTableModel(null, Baris);
+        mainTable.setModel(tabmode);
+        String sql = "select * from member";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);            
+            while(hasil.next()){
+                
+                String a = hasil.getString("id");
+                String b = hasil.getString("nama");
+                String c = hasil.getString("alamat");
+                String d = hasil.getString("tgl_lahir");
+                
+                String[] data = {a,b,c, d};
+                tabmode.addRow(data);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
+        }
     }//GEN-LAST:event_btn_menu_memberActionPerformed
 
     private void btn_menu_transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_transaksiActionPerformed
         // TODO add your handling code here:
+        mainTable.setVisible(true);
+        title.setVisible(true);
+        btn_menu_tambah_data.setVisible(true);
+        btn_menu_transaksi.setBackground(btn_menu_member.getkPressedColor());
+        title.setText("Transaksi");
+        
+        Object[] Baris = {"No ID", "Nama Member", "Nama Karyawan", "Total Harga", "Tanggal"};
+        tabmode = new DefaultTableModel(null, Baris);
+        mainTable.setModel(tabmode);
+        String sql = "select * from transaksi t, member m, karyawan k where t.id_member = m.id and t.id_karyawan = k.id";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);            
+            while(hasil.next()){
+                
+                String a = hasil.getString("t.id");
+                String b = hasil.getString("m.nama");
+                String c = hasil.getString("k.nama");
+                String d = hasil.getString("t.total_harga");
+                String e = hasil.getString("t.tanggal");
+                
+                String[] data = {a,b,c,d,e};
+                tabmode.addRow(data);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
+        }
     }//GEN-LAST:event_btn_menu_transaksiActionPerformed
+
+    private void btn_menu_tambah_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menu_tambah_dataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_menu_tambah_dataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,8 +339,12 @@ public class MenuUtama extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_menu_karyawan;
     private com.k33ptoo.components.KButton btn_menu_layanan;
     private com.k33ptoo.components.KButton btn_menu_member;
+    private com.k33ptoo.components.KButton btn_menu_tambah_data;
     private com.k33ptoo.components.KButton btn_menu_transaksi;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable mainTable;
     private component.PanelRound panelRound1;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
