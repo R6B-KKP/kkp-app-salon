@@ -37,12 +37,12 @@ public class Dashboard extends javax.swing.JFrame {
         drawer = Drawer.newDrawer(this)
                 .header(new Header())
                 .separator(2, new Color(173,173,173))
-                .background(new Color(0,0,0))
+                .background(new Color(54, 83, 179))
                 .duration(100)
                 .enableScroll(true)
                 .space(30)
                 .itemHeight(50)
-                .drawerBackground(Color.LIGHT_GRAY)
+                .drawerBackground(new Color(54, 83, 179))
                 .backgroundTransparent(0.2f)
                 .addChild(new DrawerItem("Member")
                         .foreGround(Color.white)
@@ -147,7 +147,6 @@ public class Dashboard extends javax.swing.JFrame {
         karyawan1 = new tampilan.Karyawan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 1080));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -207,7 +206,11 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 40));
+
+        member1.setBackground(new java.awt.Color(102, 102, 255));
         getContentPane().add(member1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        karyawan1.setBackground(new java.awt.Color(102, 102, 255));
         getContentPane().add(karyawan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

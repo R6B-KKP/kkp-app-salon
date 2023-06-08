@@ -21,6 +21,9 @@ public class SplashScreen extends javax.swing.JFrame {
     }
     
     public void start(){
+//        Login login = new Login();
+//        login.setVisible(true);
+        
         setResizable(false);
         setVisible(true);
         try {
