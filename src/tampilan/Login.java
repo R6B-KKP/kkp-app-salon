@@ -8,10 +8,12 @@ import database.Koneksi;
 import java.sql.*;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import model.KaryawanEntity;
+import database.Karyawan;
 
 /**
  *
- * @author Farha
+ * @author Farhan
  */
 public class Login extends javax.swing.JFrame {
 
@@ -32,9 +34,15 @@ public class Login extends javax.swing.JFrame {
             stat.setString(1, txtUsername.getText());
             stat.setString(2, txtPassword.getText());
             ResultSet  resultSet = stat.executeQuery();
+            KaryawanEntity karyawan;
             if (resultSet.next()) {
                 dispose();
-                new MenuUtama().setVisible(true);
+//                new MenuUtama().setVisible(true);
+                karyawan = new KaryawanEntity(
+                        resultSet.getInt(Karyawan.ID), resultSet.getString(Karyawan.NAMA), 
+                        resultSet.getString(Karyawan.USERNAME), resultSet.getString(Karyawan.PASSWORD));
+                System.out.println(karyawan.toString());
+                new Dashboard(karyawan).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Username Atau Password Salah!!");
             }
