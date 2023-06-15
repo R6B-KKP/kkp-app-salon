@@ -291,6 +291,7 @@ public class Login extends javax.swing.JFrame {
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnLogin.requestFocus();
+            login();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
 

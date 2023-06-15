@@ -44,7 +44,7 @@ public class Member extends javax.swing.JPanel {
         Object[] Baris = {"No ID", "Nama Member", "Alamat", "No Telpon", "Tanggal Lahir"};
         tabmode = new DefaultTableModel(null, Baris);
         jTable1.setModel(tabmode);
-        String sql = "select * from member";
+        String sql = "select * from "+database.Member.TABLE_NAME;
         try {
             java.sql.Statement stat = connenction.createStatement();
             ResultSet hasil = stat.executeQuery(sql);            
@@ -254,6 +254,7 @@ public class Member extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -265,6 +266,7 @@ public class Member extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
