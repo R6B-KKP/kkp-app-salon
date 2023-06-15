@@ -21,59 +21,62 @@ public class SplashScreen extends javax.swing.JFrame {
     }
     
     public void start(){
-        setResizable(false);
-        setVisible(true);
-        try {
-            for (int i = 0; i <= 5; i++) {
-                                
-                Thread.sleep(200);
-                if (i % 2 == 0) {
-                    txtLoading.setText("Please wait..");                
-                }else {
-                    txtLoading.setText("Please wait");      
-                }            
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            for (int i = 0; i <= 100; i++) {
-                progressBarCostume1.setValue(i);
-                progressBarCostume1.setString(i+"%");
-                txtPersen.setText(i+"%");
-
-                if (i >= 70 ) {
-                    if (i % 2 == 0) {
-                        txtLoading.setText("Connect to Database..");
-                    }else {
-                        txtLoading.setText("Connect to Database");
-                    }
-                }else if (i >= 20) {
-                    if (i % 2 == 0) {
-                        txtLoading.setText("Load Module..");
-                    }else {
-                        txtLoading.setText("Load Module");
-                    }
-                }else {
-                    if (i % 2 == 0) {
-                    txtLoading.setText("Please wait..");                
-                    } else {
-                    txtLoading.setText("Please wait");      
-                    }  
-                }
-                Thread.sleep(100);
-                
-                if (i == 100){
-                    txtLoading.setText("Connecting Ok");
-                    Login login = new Login();
-                    dispose();
-                    Thread.sleep(400);
-                    login.setVisible(true);
-                }
-            }
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
+        Login login = new Login();
+        login.setVisible(true);
+        
+//        setResizable(false);
+//        setVisible(true);
+//        try {
+//            for (int i = 0; i <= 5; i++) {
+//                                
+//                Thread.sleep(200);
+//                if (i % 2 == 0) {
+//                    txtLoading.setText("Please wait..");                
+//                }else {
+//                    txtLoading.setText("Please wait");      
+//                }            
+//            }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            for (int i = 0; i <= 100; i++) {
+//                progressBarCostume1.setValue(i);
+//                progressBarCostume1.setString(i+"%");
+//                txtPersen.setText(i+"%");
+//
+//                if (i >= 70 ) {
+//                    if (i % 2 == 0) {
+//                        txtLoading.setText("Connect to Database..");
+//                    }else {
+//                        txtLoading.setText("Connect to Database");
+//                    }
+//                }else if (i >= 20) {
+//                    if (i % 2 == 0) {
+//                        txtLoading.setText("Load Module..");
+//                    }else {
+//                        txtLoading.setText("Load Module");
+//                    }
+//                }else {
+//                    if (i % 2 == 0) {
+//                    txtLoading.setText("Please wait..");                
+//                    } else {
+//                    txtLoading.setText("Please wait");      
+//                    }  
+//                }
+//                Thread.sleep(100);
+//                
+//                if (i == 100){
+//                    txtLoading.setText("Connecting Ok");
+//                    Login login = new Login();
+//                    dispose();
+//                    Thread.sleep(400);
+//                    login.setVisible(true);
+//                }
+//            }
+//        } catch (InterruptedException e) {
+//            System.out.println(e);
+//        }
     }
 
     /**
