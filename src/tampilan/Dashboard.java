@@ -25,10 +25,12 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard(KaryawanEntity karyawan) {
         this.karyawan = karyawan;
         initComponents();
-//        member1.setVisible(false);
-//        member1.setEnabled(false);
+        member1.setVisible(false);
+        member1.setEnabled(false);
         karyawan1.setVisible(false);
         karyawan1.setEnabled(false);
+//        formTransaksi1.setVisible(false);
+//        formTransaksi1.setEnabled(false);
         lblNamaAdmin.setText(karyawan.getNama());
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         lblFooter.setForeground(Color.white);
@@ -87,30 +89,40 @@ public class Dashboard extends javax.swing.JFrame {
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(true);
                                 member1.setEnabled(true);
+                                formTransaksi1.setVisible(false);
+                                formTransaksi1.setEnabled(false);
                                 break;
                             case 1:
                                 karyawan1.setVisible(false);
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(false);
                                 member1.setEnabled(false);
+                                formTransaksi1.setVisible(true);
+                                formTransaksi1.setEnabled(true);
                                 break;
                             case 2:
                                 karyawan1.setVisible(false);
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(false);
                                 member1.setEnabled(false);
+                                formTransaksi1.setVisible(false);
+                                formTransaksi1.setEnabled(false);
                                 break;
                             case 3:
                                 member1.setVisible(false);
                                 member1.setEnabled(false);
                                 karyawan1.setVisible(true);
                                 karyawan1.setEnabled(true);
+                                formTransaksi1.setVisible(false);
+                                formTransaksi1.setEnabled(false);
                                 break;
                             case 4:
                                 karyawan1.setVisible(false);
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(false);
                                 member1.setEnabled(false);
+                                formTransaksi1.setVisible(false);
+                                formTransaksi1.setEnabled(false);
                                 break;
                             case 5:
                                 dispose();
@@ -134,6 +146,7 @@ public class Dashboard extends javax.swing.JFrame {
                     }
                 })
                 .build();
+        formTransaksi1.setKaryawan(karyawan);
     }
 
     @SuppressWarnings("unchecked")
@@ -143,10 +156,12 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         sideBar = new javax.swing.JLabel();
         lblNamaAdmin = new javax.swing.JLabel();
+        formTransaksi1 = new tampilan.FormTransaksi();
         member1 = new tampilan.Member();
         karyawan1 = new tampilan.Karyawan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1280, 1080));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -206,6 +221,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 40));
+        getContentPane().add(formTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         member1.setBackground(new java.awt.Color(102, 102, 255));
         getContentPane().add(member1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -275,6 +291,7 @@ public class Dashboard extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private tampilan.FormTransaksi formTransaksi1;
     private javax.swing.JPanel jPanel1;
     private tampilan.Karyawan karyawan1;
     private javax.swing.JLabel lblNamaAdmin;

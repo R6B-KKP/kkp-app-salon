@@ -1,6 +1,9 @@
 
 package aplication;
 
+import component.scroll.ScrollBarWin11UI;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import tampilan.SplashScreen;
 
 public class AplicationSalon {
@@ -21,7 +24,8 @@ public class AplicationSalon {
             java.util.logging.Logger.getLogger(AplicationSalon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        UIDefaults ui = UIManager.getDefaults();
+        ui.put("ScrollBarUI", ScrollBarWin11UI.class.getCanonicalName());
         new SplashScreen().start();
     }
 }
