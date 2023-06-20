@@ -91,6 +91,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 member1.setEnabled(true);
                                 formTransaksi1.setVisible(false);
                                 formTransaksi1.setEnabled(false);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
                                 break;
                             case 1:
                                 karyawan1.setVisible(false);
@@ -99,6 +101,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 member1.setEnabled(false);
                                 formTransaksi1.setVisible(true);
                                 formTransaksi1.setEnabled(true);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
                                 break;
                             case 2:
                                 karyawan1.setVisible(false);
@@ -107,6 +111,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 member1.setEnabled(false);
                                 formTransaksi1.setVisible(false);
                                 formTransaksi1.setEnabled(false);
+                                mLayanan1.setVisible(true);
+                                mLayanan1.setEnabled(true);
                                 break;
                             case 3:
                                 member1.setVisible(false);
@@ -115,6 +121,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 karyawan1.setEnabled(true);
                                 formTransaksi1.setVisible(false);
                                 formTransaksi1.setEnabled(false);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
                                 break;
                             case 4:
                                 karyawan1.setVisible(false);
@@ -123,6 +131,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 member1.setEnabled(false);
                                 formTransaksi1.setVisible(false);
                                 formTransaksi1.setEnabled(false);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
                                 break;
                             case 5:
                                 dispose();
@@ -159,6 +169,7 @@ public class Dashboard extends javax.swing.JFrame {
         formTransaksi1 = new tampilan.FormTransaksi();
         member1 = new tampilan.Member();
         karyawan1 = new tampilan.Karyawan();
+        mLayanan1 = new tampilan.MLayanan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1280, 1080));
@@ -228,6 +239,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         karyawan1.setBackground(new java.awt.Color(102, 102, 255));
         getContentPane().add(karyawan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(mLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -295,6 +307,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private tampilan.Karyawan karyawan1;
     private javax.swing.JLabel lblNamaAdmin;
+    private tampilan.MLayanan mLayanan1;
     private tampilan.Member member1;
     private javax.swing.JLabel sideBar;
     // End of variables declaration//GEN-END:variables
