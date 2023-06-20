@@ -95,6 +95,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(false);
                                 member1.setEnabled(false);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
                                 break;
                             case 2:
                                 karyawan1.setVisible(false);
