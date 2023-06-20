@@ -12,7 +12,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
 
 /**
  *
@@ -23,6 +41,8 @@ public class MLayanan extends javax.swing.JPanel {
     private final Connection connenction = new Koneksi().connect();
     private DefaultTableModel tabmode;
     int id = 0;
+    String path2 = null;
+    List<Blob> imgPreview = new ArrayList<>();
 
     /**
      * Creates new form MLayanan
@@ -39,19 +59,32 @@ public class MLayanan extends javax.swing.JPanel {
         Object[] Baris = {"No ID", "Nama Layanan", "Harga Layanan", "Harga Point"};
         tabmode = new DefaultTableModel(null, Baris);
         jTable1.setModel(tabmode);
-        String sql = "select * from "+database.Layanan.TABLE_NAME;
+        String sql = "select * from "+database.Layanan.TABLE_NAME+" where "+database.Layanan.DELETED+" = '0';";
+        imgPreview = new ArrayList<>();
         try {
             java.sql.Statement stat = connenction.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);            
+            ResultSet hasil = stat.executeQuery(sql);
+            int idx = 0;
             while(hasil.next()){
                 
                 String a = hasil.getString("id");
                 String b = hasil.getString("nama");
                 String c = hasil.getString("harga");
                 String d = hasil.getString("point_price");
+                Blob img = hasil.getBlob("gambar");
                 
-                String[] data = {a,b,c,d};
+                if (img == null) {
+                    img = new SerialBlob(new byte[0]);
+                }else{
+                    img = img;
+                }
+                
+                imgPreview.add(img);
+                
+                
+                Object[] data = {a,b,c,d};
                 tabmode.addRow(data);
+                idx++;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
@@ -64,6 +97,9 @@ public class MLayanan extends javax.swing.JPanel {
         txtHarga.setText("");
         txtPoint.setText("");
         btnSimpan4.setText("SIMPAN");
+        path2 = null;
+//        imgPreview = null;
+        label_gambar.setIcon(null);
         btnHapus.setVisible(false);
         btnHapus.setEnabled(false);
     }
@@ -90,6 +126,8 @@ public class MLayanan extends javax.swing.JPanel {
         txtHarga = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtPoint = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        label_gambar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnHapus = new com.k33ptoo.components.KButton();
@@ -193,6 +231,22 @@ public class MLayanan extends javax.swing.JPanel {
         txtPoint.setForeground(new java.awt.Color(255, 255, 255));
         txtPoint.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Gambar Produk");
+
+        label_gambar.setText("+ Tambahkan Gambar");
+        label_gambar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
+        label_gambar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label_gambar.setMaximumSize(new java.awt.Dimension(150, 120));
+        label_gambar.setMinimumSize(new java.awt.Dimension(150, 120));
+        label_gambar.setPreferredSize(new java.awt.Dimension(150, 120));
+        label_gambar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_gambarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,18 +256,21 @@ public class MLayanan extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                    .addComponent(txtHarga)
-                    .addComponent(txtPoint))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                        .addComponent(txtHarga)
+                        .addComponent(txtPoint))
+                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(443, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,7 +282,10 @@ public class MLayanan extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtPoint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -291,7 +351,7 @@ public class MLayanan extends javax.swing.JPanel {
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(572, 572, 572)
+                .addGap(586, 586, 586)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -299,7 +359,7 @@ public class MLayanan extends javax.swing.JPanel {
                     .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
             .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(kGradientPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -308,7 +368,7 @@ public class MLayanan extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(676, Short.MAX_VALUE)))
+                    .addContainerGap(777, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -328,31 +388,38 @@ public class MLayanan extends javax.swing.JPanel {
 
     private void btnSimpan4btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpan4btnSimpanActionPerformed
         // TODO add your handling code here:
-        String sqlQuery = "INSERT INTO "+ database.Layanan.TABLE_NAME +" values(?,?,?,?)";
+        String sqlQuery = "INSERT INTO "+ database.Layanan.TABLE_NAME +" values(?,?,?,?,?,?)";
         if (id != 0) {
-            sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET nama=?, harga=?, point_price=? WHERE id="+id;
+            sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET nama=?, harga=?, point_price=?, gambar=? WHERE id="+id;
         }
         PreparedStatement stat = null;
         try {
             stat = connenction.prepareStatement(sqlQuery);
+            InputStream file = new FileInputStream(new File(path2));
+
 
             if (id != 0) {
                 stat.setString(1, txtNama.getText());
                 stat.setString(2, txtHarga.getText());
                 stat.setString(3, txtPoint.getText());
+                stat.setBlob(4, file);
 
             }else{
                 stat.setString(1, Integer.toString(id));
                 stat.setString(2, txtNama.getText());
                 stat.setString(3, txtHarga.getText());
                 stat.setString(4, txtPoint.getText());
+                stat.setBlob(5, file);
+                stat.setInt(6, 0);
+
+
             }
             stat.executeUpdate();
             datatable();
             if (id != 0) {
-                JOptionPane.showMessageDialog(null, "Member update : "+txtNama.getText()+", Berhasil diedit");
+                JOptionPane.showMessageDialog(null, "Layanan update : "+txtNama.getText()+", Berhasil diedit");
             }else{
-                JOptionPane.showMessageDialog(null, "Member baru : "+txtNama.getText()+", Berhasil ditambahkan");
+                JOptionPane.showMessageDialog(null, "Layanan baru : "+txtNama.getText()+", Berhasil ditambahkan");
             }
 
             reset();
@@ -363,6 +430,8 @@ public class MLayanan extends javax.swing.JPanel {
             }else{
                 JOptionPane.showMessageDialog(null, "Member baru : "+txtNama.getText()+", Gagal ditambahkan, Error : "+e);
             }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if(stat != null){
                 try {
@@ -386,7 +455,38 @@ public class MLayanan extends javax.swing.JPanel {
         String nama = tabmode.getValueAt(baris, 1).toString();
         String harga = tabmode.getValueAt(baris, 2).toString();
         String hargaPoint = tabmode.getValueAt(baris, 3).toString();
+        
+        
+        String srcPath = "src";
+        Path basePath = Paths.get(srcPath);
+        
+        String relativePath = "asset/gambar1.png";
+        Path absolutePath = basePath.resolve(relativePath);
+        
+        
+        
+        try {
+            if ((int)imgPreview.get(baris).length() > 0) {
+                byte [] bytes = imgPreview.get(baris).getBytes(1, (int)imgPreview.get(baris).length());
+                FileOutputStream fos = new FileOutputStream(absolutePath.toString());
+                fos.write(bytes);
+                ImageIcon icon = new ImageIcon(bytes);
+                File fp = new File(absolutePath.toString());
+                path2 = fp.getAbsolutePath();
+                label_gambar.setIcon(icon);
+            }else{
+                label_gambar.setIcon(null);
+                path2 = absolutePath.toString();
+            }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
         txtNama.setText(nama);
         txtHarga.setText(harga);
         txtPoint.setText(hargaPoint);
@@ -400,7 +500,7 @@ public class MLayanan extends javax.swing.JPanel {
         int ok = JOptionPane.showConfirmDialog(null, "Hapus "+txtNama.getText(), "Konfirmasi Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
         
         if (ok == 0){
-            String sqlQuery = "DELETE FROM "+ database.Layanan.TABLE_NAME +" WHERE id = "+id;
+            String sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET deleted = 1 WHERE id = "+id;
             PreparedStatement stat = null;
             try {
                 stat = connenction.prepareStatement(sqlQuery);
@@ -423,6 +523,31 @@ public class MLayanan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnHapusbtnSimpanActionPerformed
 
+    private void label_gambarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarMouseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        
+        String path;
+        
+        if (f != null) {
+            path = f.getAbsolutePath();
+        }else{
+            path = "";
+        }
+        
+        try {
+            BufferedImage bl = ImageIO.read(new File(path));
+            Image img = bl.getScaledInstance(150, 120, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(img);
+            label_gambar.setIcon(icon);
+            path2 = path;
+        } catch (Exception e) {
+            Logger.getLogger(this.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_label_gambarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btnBatal4;
@@ -434,11 +559,13 @@ public class MLayanan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
+    private javax.swing.JLabel label_gambar;
     private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtPoint;
