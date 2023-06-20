@@ -18,7 +18,9 @@ public class Layanan {
     public static final String ID = "id";
     public static final String NAMA = "nama";
     public static final String HARGA = "harga";
-    public static final String POINT_PRICE = "point_price";
+    public static final String POINT_PRICE = "point_price";   
+    public static final String GAMBAR = "gambar";
+
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -31,6 +33,7 @@ public class Layanan {
                     NAMA+" VARCHAR(100) NOT NULL,\n" +
                     HARGA+" INT NOT NULL,\n" +
                     POINT_PRICE+" INT(4),\n" +
+                    GAMBAR+" BLOB,\n"+
                     "PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
@@ -66,10 +69,10 @@ public class Layanan {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "200000", "100"},
-            {"002", "fooFake2", "300000", "90"},
-            {"003", "fooFake3", "250000", "80"},
-            {"004", "fooFake4", "150000", "100"},
+            {"001", "fooFake1", "200000", "100", null},
+            {"002", "fooFake2", "300000", "90", null},
+            {"003", "fooFake3", "250000", "80", null},
+            {"004", "fooFake4", "150000", "100", null},
         };
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?)");
