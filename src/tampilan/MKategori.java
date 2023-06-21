@@ -12,56 +12,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
-import javax.swing.DefaultComboBoxModel;
 
 
 /**
  *
  * @author Lenovo
  */
-public class MLayanan extends javax.swing.JPanel {
-//    public static final String TABLE_NAME = "layanan";
+public class MKategori extends javax.swing.JPanel {
     private final Connection connenction = new Koneksi().connect();
     private DefaultTableModel tabmode;
     int id = 0;
-    String path2 = null;
-    List<Blob> imgPreview = new ArrayList<>();
 
     /**
-     * Creates new form MLayanan
+     * Creates new form MKategori
      */
-    public MLayanan() {
+    public MKategori() {
         initComponents();
         datatable();
+        
         btnHapus.setVisible(false);
         btnHapus.setEnabled(false);
     }
     
     public void datatable(){
-        initComboBox();
-        Object[] Baris = {"No ID", "Nama Layanan", "Harga Layanan", "Harga Point"};
+        Object[] Baris = {"No ID", "Nama Kategori"};
         tabmode = new DefaultTableModel(null, Baris);
         jTable1.setModel(tabmode);
-        String sql = "select * from "+database.Layanan.TABLE_NAME+" where "+database.Layanan.DELETED+" = '0';";
-        imgPreview = new ArrayList<>();
+        String sql = "select * from "+database.Kategori.TABLE_NAME+" where "+database.Kategori.DELETED+" = '0';";
         try {
             java.sql.Statement stat = connenction.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
@@ -70,20 +48,7 @@ public class MLayanan extends javax.swing.JPanel {
                 
                 String a = hasil.getString("id");
                 String b = hasil.getString("nama");
-                String c = hasil.getString("harga");
-                String d = hasil.getString("point_price");
-                Blob img = hasil.getBlob("gambar");
-                
-                if (img == null) {
-                    img = new SerialBlob(new byte[0]);
-                }else{
-                    img = img;
-                }
-                
-                imgPreview.add(img);
-                
-                
-                Object[] data = {a,b,c,d};
+                Object[] data = {a,b};
                 tabmode.addRow(data);
                 idx++;
             }
@@ -92,31 +57,10 @@ public class MLayanan extends javax.swing.JPanel {
         }
     }
     
-    public void initComboBox(){
-        cb_kategori.removeAll();
-        String sql = "select nama from "+database.Kategori.TABLE_NAME+" where "+database.Layanan.DELETED+" = '0';";
-        try {
-            java.sql.Statement stat = connenction.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-            while (hasil.next()) {
-                model.addElement(hasil.getString("nama"));
-            }
-            cb_kategori.setModel(model);
-            
-        } catch (Exception e) {
-        }
-    }
-    
     public void reset(){
         id = 0;
         txtNama.setText("");
-        txtHarga.setText("");
-        txtPoint.setText("");
         btnSimpan4.setText("SIMPAN");
-        path2 = null;
-//        imgPreview = null;
-        label_gambar.setIcon(null);
         btnHapus.setVisible(false);
         btnHapus.setEnabled(false);
     }
@@ -138,15 +82,7 @@ public class MLayanan extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtNama = new javax.swing.JTextField();
-        txtHarga = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtPoint = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        label_gambar = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        cb_kategori = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnHapus = new com.k33ptoo.components.KButton();
@@ -219,59 +155,18 @@ public class MLayanan extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("FORM LAYANAN");
+        jLabel3.setText("FORM KATEGORI LAYANAN");
 
         jPanel1.setOpaque(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Nama");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Harga");
+        jLabel4.setText("Nama Kategori");
 
         txtNama.setBackground(new java.awt.Color(0,0,0,0));
         txtNama.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtNama.setForeground(new java.awt.Color(255, 255, 255));
         txtNama.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-
-        txtHarga.setBackground(new java.awt.Color(0,0,0,0));
-        txtHarga.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtHarga.setForeground(new java.awt.Color(255, 255, 255));
-        txtHarga.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Harga Point");
-
-        txtPoint.setBackground(new java.awt.Color(0,0,0,0));
-        txtPoint.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtPoint.setForeground(new java.awt.Color(255, 255, 255));
-        txtPoint.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Gambar Produk");
-
-        label_gambar.setText("+ Tambahkan Gambar");
-        label_gambar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-        label_gambar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        label_gambar.setMaximumSize(new java.awt.Dimension(150, 120));
-        label_gambar.setMinimumSize(new java.awt.Dimension(150, 120));
-        label_gambar.setPreferredSize(new java.awt.Dimension(150, 120));
-        label_gambar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_gambarMouseClicked(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Kategori");
-
-        cb_kategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cb_kategori.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -279,44 +174,19 @@ public class MLayanan extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(287, 287, 287)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                    .addComponent(txtHarga)
-                    .addComponent(txtPoint)
-                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_kategori, 0, 370, Short.MAX_VALUE))
+                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(443, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cb_kategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtPoint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(228, 228, 228))
         );
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -390,7 +260,7 @@ public class MLayanan extends javax.swing.JPanel {
                     .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
             .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(kGradientPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -419,56 +289,44 @@ public class MLayanan extends javax.swing.JPanel {
 
     private void btnSimpan4btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpan4btnSimpanActionPerformed
         // TODO add your handling code here:
-        String sqlQuery = "INSERT INTO "+ database.Layanan.TABLE_NAME +" values(?,?,?,?,?,?)";
+        String sqlQuery = "INSERT INTO "+ database.Kategori.TABLE_NAME +" values(?,?,?)";
         if (id != 0) {
-            sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET nama=?, harga=?, point_price=?, gambar=? WHERE id="+id;
+            sqlQuery = "UPDATE "+ database.Kategori.TABLE_NAME +" SET nama=? WHERE id="+id;
         }
         PreparedStatement stat = null;
         try {
             stat = connenction.prepareStatement(sqlQuery);
-            InputStream file = new FileInputStream(new File(path2));
-
-
+            
             if (id != 0) {
                 stat.setString(1, txtNama.getText());
-                stat.setString(2, txtHarga.getText());
-                stat.setString(3, txtPoint.getText());
-                stat.setBlob(4, file);
 
             }else{
                 stat.setString(1, Integer.toString(id));
                 stat.setString(2, txtNama.getText());
-                stat.setString(3, txtHarga.getText());
-                stat.setString(4, txtPoint.getText());
-                stat.setBlob(5, file);
-                stat.setInt(6, 0);
-
-
+                stat.setString(3, "0");
             }
             stat.executeUpdate();
             datatable();
             if (id != 0) {
-                JOptionPane.showMessageDialog(null, "Layanan update : "+txtNama.getText()+", Berhasil diedit");
+                JOptionPane.showMessageDialog(null, "Kategori update : "+txtNama.getText()+", Berhasil diedit");
             }else{
-                JOptionPane.showMessageDialog(null, "Layanan baru : "+txtNama.getText()+", Berhasil ditambahkan");
+                JOptionPane.showMessageDialog(null, "Kategori baru : "+txtNama.getText()+", Berhasil ditambahkan");
             }
 
             reset();
         } catch (HeadlessException | SQLException e) {
             if (id != 0) {
                 id = 0;
-                JOptionPane.showMessageDialog(null, "Member update : "+txtNama.getText()+", Gagal diedit, Error : "+e);
+                JOptionPane.showMessageDialog(null, "Kategori update : "+txtNama.getText()+", Gagal diedit, Error : "+e);
             }else{
-                JOptionPane.showMessageDialog(null, "Member baru : "+txtNama.getText()+", Gagal ditambahkan, Error : "+e);
+                JOptionPane.showMessageDialog(null, "Kategori baru : "+txtNama.getText()+", Gagal ditambahkan, Error : "+e);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if(stat != null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(FormMember.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MKategori.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -484,43 +342,8 @@ public class MLayanan extends javax.swing.JPanel {
         int baris = jTable1.getSelectedRow();
         id = Integer.parseInt(tabmode.getValueAt(baris, 0).toString());
         String nama = tabmode.getValueAt(baris, 1).toString();
-        String harga = tabmode.getValueAt(baris, 2).toString();
-        String hargaPoint = tabmode.getValueAt(baris, 3).toString();
-        
-        
-        String srcPath = "src";
-        Path basePath = Paths.get(srcPath);
-        
-        String relativePath = "asset/gambar1.png";
-        Path absolutePath = basePath.resolve(relativePath);
-        
-        
-        
-        try {
-            if ((int)imgPreview.get(baris).length() > 0) {
-                byte [] bytes = imgPreview.get(baris).getBytes(1, (int)imgPreview.get(baris).length());
-                FileOutputStream fos = new FileOutputStream(absolutePath.toString());
-                fos.write(bytes);
-                ImageIcon icon = new ImageIcon(bytes);
-                File fp = new File(absolutePath.toString());
-                path2 = fp.getAbsolutePath();
-                label_gambar.setIcon(icon);
-            }else{
-                label_gambar.setIcon(null);
-                path2 = absolutePath.toString();
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
-        }
                 
         txtNama.setText(nama);
-        txtHarga.setText(harga);
-        txtPoint.setText(hargaPoint);
         btnHapus.setVisible(true);
         btnHapus.setEnabled(true);
         btnSimpan4.setText("UPDATE");
@@ -531,76 +354,43 @@ public class MLayanan extends javax.swing.JPanel {
         int ok = JOptionPane.showConfirmDialog(null, "Hapus "+txtNama.getText(), "Konfirmasi Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
         
         if (ok == 0){
-            String sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET deleted = 1 WHERE id = "+id;
+            String sqlQuery = "UPDATE "+ database.Kategori.TABLE_NAME +" SET deleted = 1 WHERE id = "+id;
             PreparedStatement stat = null;
             try {
                 stat = connenction.prepareStatement(sqlQuery);
                 stat.executeUpdate();
                 datatable();
 
-                JOptionPane.showMessageDialog(null, "Member DELETE : "+txtNama.getText()+", Berhasil dihapus!");
+                JOptionPane.showMessageDialog(null, "Kategori DELETE : "+txtNama.getText()+", Berhasil dihapus!");
                 reset();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Member DELETE : "+txtNama.getText()+", Gagal dihapus, Error : "+e);
+                JOptionPane.showMessageDialog(null, "Kategori DELETE : "+txtNama.getText()+", Gagal dihapus, Error : "+e);
             } finally{
                 if(stat != null){
                     try {
                         stat.close();
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormMember.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MKategori.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         }
     }//GEN-LAST:event_btnHapusbtnSimpanActionPerformed
 
-    private void label_gambarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarMouseClicked
-        // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        
-        String path;
-        
-        if (f != null) {
-            path = f.getAbsolutePath();
-        }else{
-            path = "";
-        }
-        
-        try {
-            BufferedImage bl = ImageIO.read(new File(path));
-            Image img = bl.getScaledInstance(150, 120, Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(img);
-            label_gambar.setIcon(icon);
-            path2 = path;
-        } catch (Exception e) {
-            Logger.getLogger(this.getName()).log(Level.SEVERE, null, e);
-        }
-    }//GEN-LAST:event_label_gambarMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btnBatal4;
     private com.k33ptoo.components.KButton btnHapus;
     private com.k33ptoo.components.KButton btnSimpan4;
-    private javax.swing.JComboBox<String> cb_kategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
-    private javax.swing.JLabel label_gambar;
-    private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtPoint;
     // End of variables declaration//GEN-END:variables
 }
