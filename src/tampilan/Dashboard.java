@@ -136,6 +136,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 mLayanan1.setEnabled(true);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mLayanan1.initComboBox();
                                 break;
                             case 4:
                                 member1.setVisible(false);
