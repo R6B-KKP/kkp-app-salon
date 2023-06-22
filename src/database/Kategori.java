@@ -13,14 +13,10 @@ import java.sql.Statement;
  *
  * @author Farhan
  */
-public class Layanan {
-    public static final String TABLE_NAME = "layanan";
+public class Kategori {
+    public static final String TABLE_NAME = "kategori";
     public static final String ID = "id";
     public static final String NAMA = "nama";
-    public static final String HARGA = "harga";
-    public static final String POINT_PRICE = "point_price";
-    public static final String ID_KATEGORI = "id_kategori";   
-    public static final String GAMBAR = "gambar";
     public static final String DELETED = "deleted";
 
 
@@ -34,12 +30,7 @@ public class Layanan {
             String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n " +
                     ID+" INT NOT NULL AUTO_INCREMENT,\n" +
                     NAMA+" VARCHAR(100) NOT NULL,\n" +
-                    HARGA+" INT NOT NULL,\n" +
-                    POINT_PRICE+" INT(4),\n" +
-                    ID_KATEGORI+" INT,\n" +
-                    GAMBAR+" BLOB,\n"+
                     DELETED+" INT DEFAULT 0 NOT NULL,\n"+
-                    " FOREIGN KEY ("+ID_KATEGORI+") REFERENCES "+Kategori.TABLE_NAME+"("+Kategori.ID+") ON DELETE CASCADE,\n" +
                     "PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
@@ -75,22 +66,18 @@ public class Layanan {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "200000", "100", null, null},
-            {"002", "fooFake2", "300000", "90", null, null},
-            {"003", "fooFake3", "250000", "80", null, null},
-            {"004", "fooFake4", "150000", "100", null, null},
+            {"001", "Kategori 1", null},
+            {"002", "Kategori 2", null},
+            {"003", "Kategori 3", null},
+            {"004", "Kategori 4", null},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
-                statement.setString(3, fakeData[i][2]);
-                statement.setString(4, fakeData[i][3]);
-                statement.setInt(5, 1);
-                statement.setString(6, null);
-                statement.setInt(7, 0);
+                statement.setInt(3, 0);
 
                 statement.executeUpdate();
             }
@@ -99,8 +86,8 @@ public class Layanan {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        new Layanan().createTable();
-        new Layanan().createFakeData();
-        System.out.println(Layanan.TABLE_NAME);
+        new Kategori().createTable();
+        new Kategori().createFakeData();
+        System.out.println(Kategori.TABLE_NAME);
     }
 }
