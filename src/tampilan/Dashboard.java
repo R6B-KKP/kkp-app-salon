@@ -6,6 +6,8 @@ import component.sidebar.DrawerItem;
 import component.sidebar.EventDrawer;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -22,6 +24,12 @@ public class Dashboard extends javax.swing.JFrame {
     private JLabel lblFooter = new JLabel("@Copyright Kelompok4");
     private KaryawanEntity karyawan;
     
+//    private void selectMenu(class c){
+//        Object menus[] = {member1, formTransaksi1, mKategori1, mLayanan1, karyawan1, null, null}; //null pertama report, null kedua exit.
+//        
+//            
+//    }
+    
     public Dashboard(KaryawanEntity karyawan) {
         this.karyawan = karyawan;
         initComponents();
@@ -35,6 +43,27 @@ public class Dashboard extends javax.swing.JFrame {
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         lblFooter.setForeground(Color.white);
         lblFooter.setHorizontalAlignment(SwingConstants.CENTER);
+        
+//        List<Object> menus = new ArrayList<>();
+
+//        Object menuMember[] = {"Member", "/asset/group.png", member1};
+//        Object menuTransaksi[] = {"Transaksi", "/asset/transaction-history.png", formTransaksi1};
+//        Object menuKategori[] = {"Kategori Layanan", "/asset/self-service.png", mKategori1};
+//        Object menuLayanan[] = {"Layanan", "/asset/self-service.png", mLayanan1};
+//        Object menuKaryawan[] = {"Karyawan", "/asset/employees.png", karyawan1};
+//        Object menuReport[] = {"Report", "/asset/report.png", null}; //report masih null
+//        Object menuExit[] = {"Exit", "/asset/switch.png", null};
+
+
+//        menus.add(menuMember);
+//        menus.add(menuTransaksi);
+//        menus.add(menuKategori);
+//        menus.add(menuLayanan);
+//        menus.add(menuKaryawan);
+//        menus.add(menuReport);
+//        menus.add(menuExit);
+        
+        
         
         drawer = Drawer.newDrawer(this)
                 .header(new Header())
