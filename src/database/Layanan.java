@@ -18,7 +18,8 @@ public class Layanan {
     public static final String ID = "id";
     public static final String NAMA = "nama";
     public static final String HARGA = "harga";
-    public static final String POINT_PRICE = "point_price";   
+    public static final String POINT_PRICE = "point_price";
+    public static final String ID_KATEGORI = "id_kategori";   
     public static final String GAMBAR = "gambar";
     public static final String DELETED = "deleted";
 
@@ -35,8 +36,10 @@ public class Layanan {
                     NAMA+" VARCHAR(100) NOT NULL,\n" +
                     HARGA+" INT NOT NULL,\n" +
                     POINT_PRICE+" INT(4),\n" +
+                    ID_KATEGORI+" INT,\n" +
                     GAMBAR+" BLOB,\n"+
                     DELETED+" INT DEFAULT 0 NOT NULL,\n"+
+                    " FOREIGN KEY ("+ID_KATEGORI+") REFERENCES "+Kategori.TABLE_NAME+"("+Kategori.ID+") ON DELETE CASCADE,\n" +
                     "PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
@@ -78,15 +81,16 @@ public class Layanan {
             {"004", "fooFake4", "150000", "100", null, null},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
                 statement.setString(3, fakeData[i][2]);
                 statement.setString(4, fakeData[i][3]);
-                statement.setString(5, null);
-                statement.setInt(6, 0);
+                statement.setInt(5, 1);
+                statement.setString(6, null);
+                statement.setInt(7, 0);
 
                 statement.executeUpdate();
             }
