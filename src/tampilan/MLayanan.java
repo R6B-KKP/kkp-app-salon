@@ -57,10 +57,13 @@ public class MLayanan extends javax.swing.JPanel {
     
     public void datatable(){
         initComboBox();
-        Object[] Baris = {"No ID", "Nama Layanan", "Harga Layanan", "Harga Point"};
+        Object[] Baris = {"No ID", "Nama Layanan", "Harga Layanan", "Harga Point", "Kategori"};
         tabmode = new DefaultTableModel(null, Baris);
         jTable1.setModel(tabmode);
-        String sql = "select * from "+database.Layanan.TABLE_NAME+" where "+database.Layanan.DELETED+" = '0';";
+        String sql = "select "+database.Layanan.TABLE_NAME+".*, "+database.Kategori.TABLE_NAME+"."+database.Kategori.NAMA+" as kategori "
+                + "from "+database.Layanan.TABLE_NAME
+                +" join "+database.Kategori.TABLE_NAME+" on "+database.Kategori.TABLE_NAME+"."+database.Kategori.ID+" = "+database.Layanan.TABLE_NAME+"."+database.Layanan.ID
+                +" where "+database.Layanan.TABLE_NAME+"."+database.Layanan.DELETED+" = '0';";
         imgPreview = new ArrayList<>();
         try {
             java.sql.Statement stat = connenction.createStatement();
@@ -72,6 +75,7 @@ public class MLayanan extends javax.swing.JPanel {
                 String b = hasil.getString("nama");
                 String c = hasil.getString("harga");
                 String d = hasil.getString("point_price");
+                String e = hasil.getString("kategori");
                 Blob img = hasil.getBlob("gambar");
                 
                 if (img == null) {
@@ -83,7 +87,7 @@ public class MLayanan extends javax.swing.JPanel {
                 imgPreview.add(img);
                 
                 
-                Object[] data = {a,b,c,d};
+                Object[] data = {a,b,c,d,e};
                 tabmode.addRow(data);
                 idx++;
             }
