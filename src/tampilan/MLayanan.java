@@ -42,7 +42,7 @@ public class MLayanan extends javax.swing.JPanel {
     private final Connection connenction = new Koneksi().connect();
     private DefaultTableModel tabmode;
     int id = 0;
-    String path2 = null;
+    String path2 = "src/asset/produk.png";
     List<Blob> imgPreview = new ArrayList<>();
 
     /**
@@ -61,8 +61,8 @@ public class MLayanan extends javax.swing.JPanel {
         tabmode = new DefaultTableModel(null, Baris);
         jTable1.setModel(tabmode);
         String sql = "select "+database.Layanan.TABLE_NAME+".*, "+database.Kategori.TABLE_NAME+"."+database.Kategori.NAMA+" as kategori "
-                + "from "+database.Layanan.TABLE_NAME
-                +" join "+database.Kategori.TABLE_NAME+" on "+database.Kategori.TABLE_NAME+"."+database.Kategori.ID+" = "+database.Layanan.TABLE_NAME+"."+database.Layanan.ID
+                +" from "+database.Layanan.TABLE_NAME
+                +" join "+database.Kategori.TABLE_NAME+" on "+database.Kategori.TABLE_NAME+"."+database.Kategori.ID+" = "+database.Layanan.TABLE_NAME+"."+database.Layanan.ID_KATEGORI
                 +" where "+database.Layanan.TABLE_NAME+"."+database.Layanan.DELETED+" = '0';";
         imgPreview = new ArrayList<>();
         try {
@@ -91,14 +91,14 @@ public class MLayanan extends javax.swing.JPanel {
                 tabmode.addRow(data);
                 idx++;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
         }
     }
     
     public void initComboBox(){
         cb_kategori.removeAll();
-        String sql = "select nama from "+database.Kategori.TABLE_NAME+" where "+database.Layanan.DELETED+" = '0';";
+        String sql = "select nama from "+database.Kategori.TABLE_NAME+" where "+database.Kategori.DELETED+" = '0';";
         try {
             java.sql.Statement stat = connenction.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
@@ -423,11 +423,24 @@ public class MLayanan extends javax.swing.JPanel {
 
     private void btnSimpan4btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpan4btnSimpanActionPerformed
         // TODO add your handling code here:
-        String sqlQuery = "INSERT INTO "+ database.Layanan.TABLE_NAME +" values(?,?,?,?,?,?)";
+        String sqlQuery = "INSERT INTO "+ database.Layanan.TABLE_NAME +" values(?,?,?,?,?,?,?)";
         if (id != 0) {
-            sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET nama=?, harga=?, point_price=?, gambar=? WHERE id="+id;
+            sqlQuery = "UPDATE "+ database.Layanan.TABLE_NAME +" SET nama=?, harga=?, point_price=?, gambar=?, id_kategori=? WHERE id="+id;
         }
         PreparedStatement stat = null;
+        String sql = "select id from "+database.Kategori.TABLE_NAME+" where "+database.Kategori.NAMA+" = '"+cb_kategori.getSelectedItem().toString()+"' AND "+database.Kategori.DELETED+" = '0';";
+        int id_kat = 0;
+        try {
+            java.sql.Statement stat2 = connenction.createStatement();
+            ResultSet hasil = stat2.executeQuery(sql);
+            hasil.next();
+            id_kat = hasil.getInt("id");
+            JOptionPane.showMessageDialog(null, "ID KATEGORI : "+id_kat);
+
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "GAGAl AMBIL ID KATEGORI"+e);
+
+        }
         try {
             stat = connenction.prepareStatement(sqlQuery);
             InputStream file = new FileInputStream(new File(path2));
@@ -438,14 +451,16 @@ public class MLayanan extends javax.swing.JPanel {
                 stat.setString(2, txtHarga.getText());
                 stat.setString(3, txtPoint.getText());
                 stat.setBlob(4, file);
+                stat.setInt(5, id_kat);
 
             }else{
                 stat.setString(1, Integer.toString(id));
                 stat.setString(2, txtNama.getText());
                 stat.setString(3, txtHarga.getText());
                 stat.setString(4, txtPoint.getText());
-                stat.setBlob(5, file);
-                stat.setInt(6, 0);
+                stat.setInt(5, id_kat);
+                stat.setBlob(6, file);
+                stat.setInt(7, 0);
 
 
             }
@@ -472,7 +487,7 @@ public class MLayanan extends javax.swing.JPanel {
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(FormMember.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MLayanan.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
