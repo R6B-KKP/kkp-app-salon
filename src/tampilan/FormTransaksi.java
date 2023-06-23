@@ -19,9 +19,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Destination;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import model.KaryawanEntity;
@@ -52,14 +55,14 @@ public class FormTransaksi extends javax.swing.JPanel {
     public FormTransaksi() {
         initComponents();
          dataLayanan = new ArrayList<>();
-        dataLayanan.add(new LayananEntity(1, "Cukur", 200000));
-        dataLayanan.add(new LayananEntity(2, "Krimbat", 100000));
-        dataLayanan.add(new LayananEntity(3, "Cat Rambut", 250000));
-        dataLayanan.add(new LayananEntity(4, "Maskeran", 120000));
-        dataLayanan.add(new LayananEntity(5, "Rias Wajah", 170000));
-        dataLayanan.add(new LayananEntity(6, "Bikin Konde", 50000));
-        dataLayanan.add(new LayananEntity(7, "clear Komedo", 120000));
-        dataLayanan.add(new LayananEntity(8, "clear jerawat", 120000));
+//        dataLayanan.add(new LayananEntity(1, "Cukur", 200000));
+//        dataLayanan.add(new LayananEntity(2, "Krimbat", 100000));
+//        dataLayanan.add(new LayananEntity(3, "Cat Rambut", 250000));
+//        dataLayanan.add(new LayananEntity(4, "Maskeran", 120000));
+//        dataLayanan.add(new LayananEntity(5, "Rias Wajah", 170000));
+//        dataLayanan.add(new LayananEntity(6, "Bikin Konde", 50000));
+//        dataLayanan.add(new LayananEntity(7, "clear Komedo", 120000));
+//        dataLayanan.add(new LayananEntity(8, "clear jerawat", 120000));
         transaksi = new ArrayList<>(Collections.nCopies(dataLayanan.size(), null));
         initComponents();
         txtCetakTransaksi.setText("");
@@ -72,9 +75,49 @@ public class FormTransaksi extends javax.swing.JPanel {
         btnUlangi.setAlignmentY(0.0F);
         txtBayar.requestFocus();
         txtBayar.setText("0");
-
-        createProduk(dataLayanan);
+        refreshList();
         dataCart();
+    }
+    
+    public void refreshList(){
+        dataLayanan = new ArrayList<>();
+        initLayanan(dataLayanan);
+        panelProduk.removeAll();
+        try {
+            createProduk(dataLayanan);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormTransaksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initLayanan(ArrayList<LayananEntity> arrLT){
+        String sql = "select "+database.Layanan.TABLE_NAME+".*, "+database.Kategori.TABLE_NAME+"."+database.Kategori.NAMA+" as kategori "
+                +" from "+database.Layanan.TABLE_NAME
+                +" join "+database.Kategori.TABLE_NAME+" on "+database.Kategori.TABLE_NAME+"."+database.Kategori.ID+" = "+database.Layanan.TABLE_NAME+"."+database.Layanan.ID_KATEGORI
+                +" where "+database.Layanan.TABLE_NAME+"."+database.Layanan.DELETED+" = '0';";
+        try {
+            java.sql.Statement stat = connenction.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            int idx = 0;
+            while(hasil.next()){
+                
+                int id = hasil.getInt("id");
+                String nama = hasil.getString("nama");
+                int harga = hasil.getInt("harga");
+                Blob file = hasil.getBlob("gambar");
+
+                if (file == null) {
+                    file = new SerialBlob(new byte[0]);
+                }else{
+                    file = file;
+                }
+                
+                arrLT.add(new LayananEntity(id, nama, harga, (java.sql.Blob) file));
+                idx++;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA TABLE :  "+e);
+        }
     }
     
     public java.util.Date parseDate(String date){
@@ -755,9 +798,14 @@ public class FormTransaksi extends javax.swing.JPanel {
         txtBayar.requestFocus();
     }
     
-    private void createProduk(ArrayList<LayananEntity> dataLayanan){
+    private void createProduk(ArrayList<LayananEntity> dataLayanan) throws SQLException{
         for (LayananEntity lyn : dataLayanan) {
-            ButtonProduk btnProduk = new ButtonProduk(icon, lyn);
+            byte [] bytes = null;
+
+            bytes = lyn.getGambar().getBytes(1, (int) lyn.getGambar().length());
+            ImageIcon ic = new ImageIcon(bytes);
+
+            ButtonProduk btnProduk = new ButtonProduk(ic, lyn);
             btnProduk.addMouseListener(new MouseListener() {
                 public void mouseClicked(MouseEvent e) {
                     ButtonProduk btn = (ButtonProduk) e.getSource();

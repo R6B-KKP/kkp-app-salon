@@ -108,6 +108,7 @@ public class Dashboard extends javax.swing.JFrame {
                                 member1.setEnabled(false);
                                 formTransaksi1.setVisible(true);
                                 formTransaksi1.setEnabled(true);
+                                formTransaksi1.refreshList();
                                 mLayanan1.setVisible(false);
                                 mLayanan1.setEnabled(false);
                                 mKategori1.setVisible(false);
