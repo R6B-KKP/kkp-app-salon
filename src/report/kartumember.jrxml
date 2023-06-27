@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="030d91cc-539d-4d45-9581-bbef7e155a86">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="197"/>
-	<property name="ireport.y" value="859"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
      member.`id` AS member_id,
@@ -23,8 +23,8 @@ FROM
 	<background>
 		<band height="555">
 			<image>
-				<reportElement x="0" y="56" width="802" height="555" uuid="59b566c3-1ae4-4658-87cf-641f2b02f3d7"/>
-				<imageExpression><![CDATA["C:\\Users\\Dino\\Documents\\NetBeansProjects\\kkp\\kkp-app-salon\\src\\asset\\1.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="802" height="555" uuid="59b566c3-1ae4-4658-87cf-641f2b02f3d7"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/R6B-KKP/kkp-app-salon/main/src/asset/1.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -32,7 +32,7 @@ FROM
 		<band height="150" splitType="Stretch">
 			<image>
 				<reportElement x="357" y="11" width="151" height="129" uuid="734d85b8-aee9-4404-a1c6-53357c1a772d"/>
-				<imageExpression><![CDATA["C:\\Users\\Dino\\Documents\\NetBeansProjects\\kkp\\kkp-app-salon\\src\\asset\\logo-salon-large.png"]]></imageExpression>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/R6B-KKP/kkp-app-salon/main/src/asset/logo-salon-large.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
