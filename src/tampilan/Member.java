@@ -444,7 +444,7 @@ public class Member extends javax.swing.JPanel {
         
         String namaFile = "src/report/kartumember.jasper";
         HashMap parameter = new HashMap();
-        parameter.put ("IDMEMBER" ,id);
+        parameter.put ("id" ,id);
         File report_file = new File(namaFile);
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(report_file.getPath());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameter, connenction);

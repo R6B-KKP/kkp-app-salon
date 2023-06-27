@@ -2,8 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="030d91cc-539d-4d45-9581-bbef7e155a86">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<property name="ireport.y" value="469"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT
      member.`id` AS member_id,
      member.`nama` AS member_nama,
@@ -12,7 +15,8 @@
      member.`point` AS member_point,
      member.`notelp` AS member_notelp
 FROM
-     `member` member]]>
+     `member` member
+WHERE id = $P{id}]]>
 	</queryString>
 	<field name="member_id" class="java.lang.Integer"/>
 	<field name="member_nama" class="java.lang.String"/>
@@ -23,7 +27,7 @@ FROM
 	<background>
 		<band height="555">
 			<image>
-				<reportElement x="0" y="0" width="802" height="555" uuid="59b566c3-1ae4-4658-87cf-641f2b02f3d7"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="555" uuid="59b566c3-1ae4-4658-87cf-641f2b02f3d7"/>
 				<imageExpression><![CDATA["https://raw.githubusercontent.com/R6B-KKP/kkp-app-salon/main/src/asset/1.jpg"]]></imageExpression>
 			</image>
 		</band>
@@ -39,9 +43,9 @@ FROM
 	<pageHeader>
 		<band height="36" splitType="Stretch">
 			<staticText>
-				<reportElement x="351" y="9" width="166" height="20" forecolor="#FFCCCC" uuid="7bca2266-eb06-41f9-a684-e546aa25d5c6"/>
+				<reportElement x="342" y="0" width="166" height="36" forecolor="#FFCCCC" uuid="7bca2266-eb06-41f9-a684-e546aa25d5c6"/>
 				<textElement>
-					<font fontName="Cooper Std Black" size="18"/>
+					<font fontName="Comic Sans MS" size="18"/>
 				</textElement>
 				<text><![CDATA[Kartu Member]]></text>
 			</staticText>
@@ -52,112 +56,112 @@ FROM
 			<textField>
 				<reportElement x="461" y="211" width="160" height="20" forecolor="#FFCCCC" uuid="96a95e8a-85a8-4d6b-b2a9-5dd975dba494"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{member_notelp}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="461" y="157" width="160" height="20" forecolor="#FFCCCC" uuid="35736ba2-2f80-48e7-bc81-ca8b7efc9bfe"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{member_tgl_lahir}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="461" y="106" width="160" height="20" forecolor="#FFCCCC" uuid="e884c85e-d5d2-42db-a94e-d7e24875cd98"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{member_alamat}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="461" y="13" width="160" height="20" forecolor="#FFCCCC" uuid="411841d4-b1e2-4fb2-b97e-0602ca4d5a20"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{member_nama}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="461" y="54" width="160" height="20" forecolor="#FFCCCC" uuid="bbf3268a-6575-4d64-b1c8-fe17947ff608"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{member_id}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="224" y="211" width="160" height="20" forecolor="#FFCCCC" uuid="3661cb0d-3991-4460-ba45-53f6f7b985c7"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[No Telpon]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="224" y="106" width="160" height="20" forecolor="#FFCCCC" uuid="d32e16ef-43c6-447d-86f3-5c589acbf5c9"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Alamat]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="224" y="157" width="160" height="20" forecolor="#FFCCCC" uuid="1c3f35d2-0d2c-4bee-b132-124892122b34"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Tanggal Lahir]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="224" y="13" width="160" height="20" forecolor="#FFCCCC" uuid="3e54acfa-2e4c-48bb-b940-1f38667ce66e"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Nama Member]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="224" y="54" width="160" height="20" forecolor="#FFCCCC" uuid="8e195673-c912-4888-9def-3fd3536e848b"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Member ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="402" y="13" width="19" height="20" forecolor="#FFCCCC" uuid="1e205d67-0123-43cf-b6b5-7c0149ac84e7"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="402" y="54" width="19" height="20" forecolor="#FFCCCC" uuid="856626cc-cc79-4e61-92fb-bf7979b0fa56"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="402" y="106" width="19" height="20" forecolor="#FFCCCC" uuid="a0e4ce52-69b1-44d3-8153-22ba16ff5310"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="402" y="157" width="19" height="20" forecolor="#FFCCCC" uuid="22ddf48c-5093-474a-bc3f-f992ca6d7d68"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="402" y="211" width="19" height="20" forecolor="#FFCCCC" uuid="de474a71-c44e-4a36-bb4f-3c5e876bb7a5"/>
 				<textElement textAlignment="Left">
-					<font fontName="Cooper Std Black" size="12" isItalic="false"/>
+					<font fontName="Comic Sans MS" size="12" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="174" y="312" width="499" height="20" forecolor="#FFCCCC" uuid="25879e15-f1c7-4666-a9ea-fb16757f7353"/>
+				<reportElement x="174" y="298" width="499" height="34" forecolor="#FFCCCC" uuid="25879e15-f1c7-4666-a9ea-fb16757f7353"/>
 				<textElement>
-					<font fontName="Cooper Std Black" size="18"/>
+					<font fontName="Comic Sans MS" size="18"/>
 				</textElement>
 				<text><![CDATA[TERIMA KASIH SUDAH MENJADI MEMBER KAMI]]></text>
 			</staticText>
