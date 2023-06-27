@@ -179,7 +179,7 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setVisible(false);
                                 formPromo1.setEnabled(false);
                                 break;
-                            case 5:
+                            case 6:
                                 karyawan1.setVisible(false);
                                 karyawan1.setEnabled(false);
                                 member1.setVisible(false);
@@ -190,11 +190,10 @@ public class Dashboard extends javax.swing.JFrame {
                                 mLayanan1.setEnabled(false);
                                 formPromo1.setVisible(true);
                                 formPromo1.setEnabled(true);
-                                break;
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 break;
-                            case 6:
+                            case 7:
                                 dispose();
                                 new Login().setVisible(true);
                                 break;
@@ -234,7 +233,8 @@ public class Dashboard extends javax.swing.JFrame {
         mKategori1 = new tampilan.MKategori();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1280, 1080));
+        setMinimumSize(new java.awt.Dimension(1280, 1000));
+        setPreferredSize(new java.awt.Dimension(1280, 1000));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
