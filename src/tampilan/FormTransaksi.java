@@ -623,10 +623,10 @@ public class FormTransaksi extends javax.swing.JPanel {
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    int baris;
     private void tableCartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCartMouseClicked
         // TODO add your handling code here:
-        int baris = tableCart.getSelectedRow();
+        baris = tableCart.getSelectedRow();
         int id = Integer.parseInt(modelCart.getValueAt(baris, 0).toString());
 
         for (TransaksiEntity trx : transaksi) {
@@ -656,12 +656,21 @@ public class FormTransaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusSemuabtnSimpanActionPerformed
 
     private void btnHapusbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusbtnSimpanActionPerformed
-        if (tempDelete != null) {
+        
+        if (tempDelete != null && tempDelete.getQty() >= 1) {
+            System.out.println("Temp"+tempDelete.toString());
             int index = transaksi.indexOf(tempDelete);
-            transaksi.set(index, null);
-            dataCart();
+            tempDelete.setQty(tempDelete.getQty()-1);
+            transaksi.set(index, tempDelete);
+            tempDelete = transaksi.get(index);
+            System.out.println("Ubah Temp"+tempDelete.toString());
+            if (tempDelete.getQty() == 1) {
+                tempDelete = null;
+                transaksi.set(index, null);
+            }
         }
-        tempDelete = null;
+        dataCart();
+        tableCart.setRowSelectionInterval(baris, baris);
     }//GEN-LAST:event_btnHapusbtnSimpanActionPerformed
 
     private void btnHitungbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungbtnSimpanActionPerformed
@@ -732,7 +741,7 @@ public class FormTransaksi extends javax.swing.JPanel {
         int tempTotal = 0;
         int tempJumlah = 0;
         for (TransaksiEntity trs : transaksi) {
-            if (trs != null ) {
+            if (trs != null  && trs.getQty() != 0) {
                 tempJumlah = tempJumlah + (trs.getPrice()*trs.getQty());
                 tempTotal = tempTotal + (trs.getPrice()*trs.getQty());
                 tempTotal = (int) (tempTotal + (tempTotal*pajak));
