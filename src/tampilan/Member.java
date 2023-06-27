@@ -5,10 +5,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;  
+import java.util.HashMap;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.*;
+import net.sf.jasperreports.view.*;
 /**
  *
  * @author Farhan
@@ -82,6 +87,7 @@ public class Member extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         btnSimpan4 = new com.k33ptoo.components.KButton();
         btnBatal4 = new com.k33ptoo.components.KButton();
+        btnSimpan5 = new com.k33ptoo.components.KButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -137,16 +143,36 @@ public class Member extends javax.swing.JPanel {
             }
         });
 
+        btnSimpan5.setText("CETAK");
+        btnSimpan5.setAlignmentY(0.0F);
+        btnSimpan5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSimpan5.setkEndColor(new java.awt.Color(255, 248, 200));
+        btnSimpan5.setkHoverEndColor(new java.awt.Color(255, 160, 0));
+        btnSimpan5.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        btnSimpan5.setkHoverStartColor(new java.awt.Color(255, 248, 200));
+        btnSimpan5.setkSelectedColor(new java.awt.Color(255, 255, 255));
+        btnSimpan5.setkStartColor(new java.awt.Color(255, 160, 0));
+        btnSimpan5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpan5btnSimpanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(506, Short.MAX_VALUE)
-                .addComponent(btnSimpan4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBatal4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(492, 492, 492))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(510, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnSimpan4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBatal4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(492, 492, 492))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnSimpan5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(556, 556, 556))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +181,9 @@ public class Member extends javax.swing.JPanel {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSimpan4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBatal4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(btnSimpan5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -266,7 +294,6 @@ public class Member extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -303,7 +330,7 @@ public class Member extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(76, 76, 76)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(403, Short.MAX_VALUE))
+                .addContainerGap(408, Short.MAX_VALUE))
             .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(kGradientPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -410,11 +437,30 @@ public class Member extends javax.swing.JPanel {
 //        }
         
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnSimpan5btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpan5btnSimpanActionPerformed
+        // TODO add your handling code here:
+        try{
+        
+        String namaFile = "src/report/kartumember.jasper";
+        HashMap parameter = new HashMap();
+        parameter.put ("IDMEMBER" ,id);
+        File report_file = new File(namaFile);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(report_file.getPath());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameter, connenction);
+        JasperViewer. viewReport (jasperPrint, false);//coba
+        JasperViewer.setDefaultLookAndFeelDecorated(true);
+    }catch (Exception e){
+       Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, e);
+    
+        }
+    }//GEN-LAST:event_btnSimpan5btnSimpanActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btnBatal4;
     private com.k33ptoo.components.KButton btnSimpan4;
+    private com.k33ptoo.components.KButton btnSimpan5;
     private com.toedter.calendar.JDateChooser dateTglLahir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

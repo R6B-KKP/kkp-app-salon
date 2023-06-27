@@ -16,6 +16,7 @@ public class Member {
     public static final String ALAMAT = "alamat";
     public static final String TGL_LAHIR = "tgl_lahir";
     public static final String POINT = "point";
+    public static final String NO_TELP = "notelp";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -29,6 +30,8 @@ public class Member {
                     ALAMAT+" TEXT NOT NULL,\n" +
                     TGL_LAHIR+" DATE NOT NULL,\n" +
                     POINT+" INT,\n" +
+                    NO_TELP+" VARCHAR(50),\n" +
+                    
                     "    PRIMARY KEY ("+ID+")\n" +
                     ") ENGINE = InnoDB;";
 
@@ -64,13 +67,13 @@ public class Member {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "alamat1", "", "30"},
-            {"002", "fooFake2", "alamat2", "", "50"},
-            {"003", "fooFake3", "alamat3", "", "70"},
-            {"004", "fooFake4", "alamat4", "", "100"},
+            {"001", "fooFake1", "alamat1", "", "30","908"},
+            {"002", "fooFake2", "alamat2", "", "50","980"},
+            {"003", "fooFake3", "alamat3", "", "70","086"},
+            {"004", "fooFake4", "alamat4", "", "100","089"},
         };
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
@@ -78,6 +81,7 @@ public class Member {
                 statement.setString(3, fakeData[i][2]);
                 statement.setDate(4, new java.sql.Date(new java.util.Date().getTime()));
                 statement.setString(5, fakeData[i][4]);
+                statement.setString(6, fakeData[i][5]);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
