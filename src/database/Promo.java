@@ -1,22 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package database;
 
 import java.sql.*;
-/**
- *
- * @author Farhan
- */
-public class Member {
-    public static final String TABLE_NAME = "member";
-    public static final String ID = "id";
+import java.util.Calendar;
+
+public class Promo {
+    public static final String TABLE_NAME = "promo";
+    public static final String KODE_PROMO = "kode_promo";
     public static final String NAMA = "nama";
-    public static final String ALAMAT = "alamat";
-    public static final String TGL_LAHIR = "tgl_lahir";
-    public static final String POINT = "point";
-    public static final String NO_TELP = "notelp";
+    public static final String DISKON = "diskon";
+    public static final String MAX_DISKON = "max_diskon";
+    public static final String TGL_MULAI = "tgl_mulai";
+    public static final String TGL_AKHIR = "tgl_akhir";
     
     public void createTable(){
         Connection connection = new Koneksi().connect();
@@ -25,13 +20,13 @@ public class Member {
             statement = connection.createStatement();
 
             String query = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (\n" +
-                    ID+" INT NOT NULL AUTO_INCREMENT,\n" +
+                    KODE_PROMO+" VARCHAR(50) NOT NULL,\n" +
                     NAMA+" VARCHAR(100) NOT NULL,\n" +
-                    ALAMAT+" TEXT NOT NULL,\n" +
-                    TGL_LAHIR+" DATE NOT NULL,\n" +
-                    POINT+" INT,\n" +
-                    NO_TELP+" VARCHAR(20),\n" +
-                    "    PRIMARY KEY ("+ID+")\n" +
+                    DISKON+" INT ,\n" +
+                    MAX_DISKON+" INT ,\n" +
+                    TGL_MULAI+" DATE,\n" +
+                    TGL_AKHIR+" DATE,\n" +
+                    "    PRIMARY KEY ("+KODE_PROMO+")\n" +
                     ") ENGINE = InnoDB;";
 
             String dropQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -66,11 +61,16 @@ public class Member {
     public void createFakeData() throws InterruptedException{
         Connection connection = new Koneksi().connect();
         String[][] fakeData = {
-            {"001", "fooFake1", "alamat1", "", "30", "0891213181"},
-            {"002", "fooFake2", "alamat2", "", "50", "0891213182"},
-            {"003", "fooFake3", "alamat3", "", "70", "0891213183"},
-            {"004", "fooFake4", "alamat4", "", "100", "0891213184"},
+            {"pF001", "promoFake1", "10", "10000", "", ""},
+            {"pF002", "promoFake2", "5", "20000", "", ""},
+            {"pF003", "promoFake3", "15", "15000", "", ""},
+            {"pF004", "promoFake4", "12", "8000", "", ""},
         };
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date today = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_YEAR, 30);
+        java.util.Date futureDate = calendar.getTime();
+
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
@@ -78,17 +78,21 @@ public class Member {
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
                 statement.setString(3, fakeData[i][2]);
-                statement.setDate(4, new java.sql.Date(new java.util.Date().getTime()));
-                statement.setString(5, fakeData[i][4]);
-                statement.setString(6, fakeData[i][5]);
+                statement.setString(4, fakeData[i][3]);
+                statement.setDate(5, new java.sql.Date(today.getTime()));
+                statement.setDate(6, new java.sql.Date(futureDate.getTime()));
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
     
     public static void main(String[] args) throws InterruptedException {
-        new Member().createTable();
-        new Member().createFakeData();
+        new Promo().createTable();
+        new Promo().createFakeData();
     }
 }

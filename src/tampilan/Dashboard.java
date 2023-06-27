@@ -29,6 +29,8 @@ public class Dashboard extends javax.swing.JFrame {
         member1.setEnabled(false);
         karyawan1.setVisible(false);
         karyawan1.setEnabled(false);
+        formPromo1.setVisible(false);
+        formPromo1.setEnabled(false);
 //        formTransaksi1.setVisible(false);
 //        formTransaksi1.setEnabled(false);
         lblNamaAdmin.setText(karyawan.getNama());
@@ -76,6 +78,11 @@ public class Dashboard extends javax.swing.JFrame {
                         .font(font)
                         .icon(new ImageIcon(getClass().getResource("/asset/report.png")))
                         .build())
+                .addChild(new DrawerItem("Promo")
+                        .foreGround(Color.white)
+                        .font(font)
+                        .icon(new ImageIcon(getClass().getResource("/asset/coupon.png")))
+                        .build())
                 .addFooter(new DrawerItem("Exit")
                         .foreGround(Color.white)
                         .font(font)
@@ -98,6 +105,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 formTransaksi1.setEnabled(false);
                                 mLayanan1.setVisible(false);
                                 mLayanan1.setEnabled(false);
+                                formPromo1.setVisible(false);
+                                formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 break;
@@ -111,6 +120,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 formTransaksi1.refreshList();
                                 mLayanan1.setVisible(false);
                                 mLayanan1.setEnabled(false);
+                                formPromo1.setVisible(false);
+                                formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 break;
@@ -135,6 +146,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 formTransaksi1.setEnabled(false);
                                 mLayanan1.setVisible(true);
                                 mLayanan1.setEnabled(true);
+                                formPromo1.setVisible(false);
+                                formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 
@@ -149,6 +162,8 @@ public class Dashboard extends javax.swing.JFrame {
                                 formTransaksi1.setEnabled(false);
                                 mLayanan1.setVisible(false);
                                 mLayanan1.setEnabled(false);
+                                formPromo1.setVisible(false);
+                                formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 break;
@@ -161,6 +176,21 @@ public class Dashboard extends javax.swing.JFrame {
                                 formTransaksi1.setEnabled(false);
                                 mLayanan1.setVisible(false);
                                 mLayanan1.setEnabled(false);
+                                formPromo1.setVisible(false);
+                                formPromo1.setEnabled(false);
+                                break;
+                            case 5:
+                                karyawan1.setVisible(false);
+                                karyawan1.setEnabled(false);
+                                member1.setVisible(false);
+                                member1.setEnabled(false);
+                                formTransaksi1.setVisible(false);
+                                formTransaksi1.setEnabled(false);
+                                mLayanan1.setVisible(false);
+                                mLayanan1.setEnabled(false);
+                                formPromo1.setVisible(true);
+                                formPromo1.setEnabled(true);
+                                break;
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
                                 break;
@@ -200,6 +230,7 @@ public class Dashboard extends javax.swing.JFrame {
         member1 = new tampilan.Member();
         karyawan1 = new tampilan.Karyawan();
         mLayanan1 = new tampilan.MLayanan();
+        formPromo1 = new tampilan.FormPromo();
         mKategori1 = new tampilan.MKategori();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -271,6 +302,7 @@ public class Dashboard extends javax.swing.JFrame {
         karyawan1.setBackground(new java.awt.Color(102, 102, 255));
         getContentPane().add(karyawan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         getContentPane().add(mLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(formPromo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         getContentPane().add(mKategori1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -335,6 +367,7 @@ public class Dashboard extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private tampilan.FormPromo formPromo1;
     private tampilan.FormTransaksi formTransaksi1;
     private javax.swing.JPanel jPanel1;
     private tampilan.Karyawan karyawan1;
