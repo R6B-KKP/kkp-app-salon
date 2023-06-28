@@ -63,7 +63,6 @@ public class FormTransaksi extends javax.swing.JPanel {
 //        dataLayanan.add(new LayananEntity(6, "Bikin Konde", 50000));
 //        dataLayanan.add(new LayananEntity(7, "clear Komedo", 120000));
 //        dataLayanan.add(new LayananEntity(8, "clear jerawat", 120000));
-        transaksi = new ArrayList<>(Collections.nCopies(dataLayanan.size(), null));
         initComponents();
         txtCetakTransaksi.setText("");
         txtCetakTransaksi.setEditable(false);
@@ -76,6 +75,7 @@ public class FormTransaksi extends javax.swing.JPanel {
         txtBayar.requestFocus();
         txtBayar.setText("0");
         refreshList();
+        transaksi = new ArrayList<>(Collections.nCopies(dataLayanan.size(), null));
         dataCart();
     }
     
@@ -85,6 +85,9 @@ public class FormTransaksi extends javax.swing.JPanel {
         panelProduk.removeAll();
         try {
             createProduk(dataLayanan);
+            for (LayananEntity layananEntity : dataLayanan) {
+                System.out.println(layananEntity);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FormTransaksi.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -666,10 +669,10 @@ public class FormTransaksi extends javax.swing.JPanel {
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    int baris;
     private void tableCartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCartMouseClicked
         // TODO add your handling code here:
-        int baris = tableCart.getSelectedRow();
+        baris = tableCart.getSelectedRow();
         int id = Integer.parseInt(modelCart.getValueAt(baris, 0).toString());
 
         for (TransaksiEntity trx : transaksi) {
@@ -699,12 +702,21 @@ public class FormTransaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusSemuabtnSimpanActionPerformed
 
     private void btnHapusbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusbtnSimpanActionPerformed
-        if (tempDelete != null) {
             int index = transaksi.indexOf(tempDelete);
-            transaksi.set(index, null);
-            dataCart();
+        if (tempDelete != null) {
+            if (tempDelete.getQty() > 1) {
+                System.out.println("Temp"+tempDelete.toString());
+                tempDelete.setQty(tempDelete.getQty()-1);
+                transaksi.set(index, tempDelete);
+                tempDelete = transaksi.get(index);
+                System.out.println("Ubah Temp"+tempDelete.toString());
+            }else if (tempDelete.getQty() == 1) {
+                tempDelete = null;
+                transaksi.set(index, null);
+            }
         }
-        tempDelete = null;
+        dataCart();
+        tableCart.setRowSelectionInterval(baris, baris);
     }//GEN-LAST:event_btnHapusbtnSimpanActionPerformed
 
     private void btnHitungbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungbtnSimpanActionPerformed
@@ -775,7 +787,7 @@ public class FormTransaksi extends javax.swing.JPanel {
         int tempTotal = 0;
         int tempJumlah = 0;
         for (TransaksiEntity trs : transaksi) {
-            if (trs != null ) {
+            if (trs != null  && trs.getQty() != 0) {
                 tempJumlah = tempJumlah + (trs.getPrice()*trs.getQty());
                 tempTotal = tempTotal + (trs.getPrice()*trs.getQty());
                 tempTotal = (int) (tempTotal + (tempTotal*pajak));
@@ -804,7 +816,6 @@ public class FormTransaksi extends javax.swing.JPanel {
 
             bytes = lyn.getGambar().getBytes(1, (int) lyn.getGambar().length());
             ImageIcon ic = new ImageIcon(bytes);
-
             ButtonProduk btnProduk = new ButtonProduk(ic, lyn);
             btnProduk.addMouseListener(new MouseListener() {
                 public void mouseClicked(MouseEvent e) {
