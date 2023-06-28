@@ -702,15 +702,15 @@ public class FormTransaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusSemuabtnSimpanActionPerformed
 
     private void btnHapusbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusbtnSimpanActionPerformed
-        
-        if (tempDelete != null && tempDelete.getQty() >= 1) {
-            System.out.println("Temp"+tempDelete.toString());
             int index = transaksi.indexOf(tempDelete);
-            tempDelete.setQty(tempDelete.getQty()-1);
-            transaksi.set(index, tempDelete);
-            tempDelete = transaksi.get(index);
-            System.out.println("Ubah Temp"+tempDelete.toString());
-            if (tempDelete.getQty() == 1) {
+        if (tempDelete != null) {
+            if (tempDelete.getQty() > 1) {
+                System.out.println("Temp"+tempDelete.toString());
+                tempDelete.setQty(tempDelete.getQty()-1);
+                transaksi.set(index, tempDelete);
+                tempDelete = transaksi.get(index);
+                System.out.println("Ubah Temp"+tempDelete.toString());
+            }else if (tempDelete.getQty() == 1) {
                 tempDelete = null;
                 transaksi.set(index, null);
             }
