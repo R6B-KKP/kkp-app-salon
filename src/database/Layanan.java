@@ -4,10 +4,16 @@
  */
 package database;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -83,18 +89,21 @@ public class Layanan {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
+                InputStream file = new FileInputStream(new File("src/asset/produk.png"));
                 Thread.sleep((i+2)*100);
                 statement.setString(1, fakeData[i][0]);
                 statement.setString(2, fakeData[i][1]);
                 statement.setString(3, fakeData[i][2]);
                 statement.setString(4, fakeData[i][3]);
                 statement.setInt(5, 1);
-                statement.setString(6, null);
+                statement.setBlob(6,file);
                 statement.setInt(7, 0);
 
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Layanan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
