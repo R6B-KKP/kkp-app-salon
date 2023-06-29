@@ -31,6 +31,8 @@ public class Dashboard extends javax.swing.JFrame {
         karyawan1.setEnabled(false);
         formPromo1.setVisible(false);
         formPromo1.setEnabled(false);
+        mKategori1.setVisible(false);
+        mKategori1.setEnabled(false);
 //        formTransaksi1.setVisible(false);
 //        formTransaksi1.setEnabled(false);
         lblNamaAdmin.setText(karyawan.getNama());
