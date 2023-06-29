@@ -169,6 +169,7 @@ public class FormTransaksi extends javax.swing.JPanel {
         btnBatalTransaksi = new com.k33ptoo.components.KButton();
         jLabel11 = new javax.swing.JLabel();
         txtTotalHarga1 = new javax.swing.JTextField();
+        btnHapus1 = new com.k33ptoo.components.KButton();
         jPanel6 = new javax.swing.JPanel();
         btnCetakStuk = new com.k33ptoo.components.KButton();
         btnUlangi = new com.k33ptoo.components.KButton();
@@ -475,6 +476,22 @@ public class FormTransaksi extends javax.swing.JPanel {
         txtTotalHarga1.setForeground(new java.awt.Color(255, 255, 255));
         txtTotalHarga1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
 
+        btnHapus1.setText("CEK ID");
+        btnHapus1.setAlignmentY(0.0F);
+        btnHapus1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHapus1.setkEndColor(new java.awt.Color(255, 248, 200));
+        btnHapus1.setkHoverEndColor(new java.awt.Color(255, 160, 0));
+        btnHapus1.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        btnHapus1.setkHoverStartColor(new java.awt.Color(255, 248, 200));
+        btnHapus1.setkSelectedColor(new java.awt.Color(255, 255, 255));
+        btnHapus1.setkStartColor(new java.awt.Color(255, 160, 0));
+        btnHapus1.setMargin(new java.awt.Insets(1, 8, 1, 8));
+        btnHapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapus1btnSimpanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -507,7 +524,8 @@ public class FormTransaksi extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtTotalHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -516,13 +534,14 @@ public class FormTransaksi extends javax.swing.JPanel {
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotalHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTotalHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(btnHapusSemua, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -720,7 +739,7 @@ public class FormTransaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusbtnSimpanActionPerformed
 
     private void btnHitungbtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungbtnSimpanActionPerformed
-       bayar =  Integer.parseInt(txtBayar.getText());
+        bayar =  Integer.parseInt(txtBayar.getText());
         if (bayar >= totalHarga) {
             kembali =  bayar-totalHarga;
             LocalDateTime waktu = LocalDateTime.now();
@@ -730,6 +749,62 @@ public class FormTransaksi extends javax.swing.JPanel {
             txtDikembalikan.setText(String.format("%,d", kembali));
             txtCetakTransaksi.setText( recordStruk());
             btnCetakStuk.setEnabled(true);
+            
+            
+            try {
+                String sqlQueryTransaksi = "INSERT INTO "+ database.Transaksi.TABLE_NAME +" values(?,?,?,?,?,?)";
+                String sqlQueryTransaksiDetail = "INSERT INTO "+ database.TransaksiDetail.TABLE_NAME +"(id_layanan, id_transaksi) values (?, ?)";
+
+                PreparedStatement stat = null;
+                PreparedStatement stat2 = null;
+
+                //Transaksi
+                stat = connenction.prepareStatement(sqlQueryTransaksi, Statement.RETURN_GENERATED_KEYS);
+                Date sqlDate =  new java.sql.Date(new java.util.Date().getTime());
+                
+                stat.setString(1, null);
+                stat.setInt(2,  Integer.parseInt(txtTotalHarga1.getText()));
+                stat.setInt(3, karyawan.getId());
+                stat.setInt(4, totalHarga);
+                stat.setDate(5, sqlDate);
+                stat.setString(6, null);
+                
+//                stat.executeUpdate();
+                int affectedRows = stat.executeUpdate();
+                int tId = 0;
+
+                if (affectedRows == 0) {
+                    throw new SQLException("Creating user failed, no rows affected.");
+                }
+                try (ResultSet transaksiRow = stat.getGeneratedKeys()) {
+                    if (transaksiRow.next()) {
+                        tId = (int) transaksiRow.getLong(1);
+                    }
+                    else {
+                        throw new SQLException("Creating user failed, no ID obtained.");
+                    }
+                }
+                System.out.println("ID : "+tId);
+                //Transaksi Detail
+                
+                for (TransaksiEntity trx : transaksi) {
+                    if (trx != null) {
+                        System.out.println("TRX : "+trx.getId()+" Transaksi : "+tId);
+                        
+                        for (int i = 0; i < trx.getQty(); i++) {
+                            stat2 = connenction.prepareStatement(sqlQueryTransaksiDetail);
+                            stat2.setInt(1, trx.getId());
+                            stat2.setInt(2, tId);
+
+                            stat2.addBatch();
+                            stat2.executeBatch();
+                        }
+                        
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FormTransaksi.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Nilai Pembayaran Tidak Boleh Kurang Dari Total",  "Transaksi", JOptionPane.WARNING_MESSAGE);
             txtBayar.requestFocus();
@@ -741,12 +816,31 @@ public class FormTransaksi extends javax.swing.JPanel {
         txtBayar.setText("0");
         txtBayar.requestFocus();
     }//GEN-LAST:event_btnBatalTransaksibtnSimpanActionPerformed
+
+    private void btnHapus1btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapus1btnSimpanActionPerformed
+        // TODO add your handling code here:
+        String sqlQueryMember = "SELECT * FROM "+Member.TABLE_NAME+" WHERE id = "+txtTotalHarga1.getText();
+        try {
+            PreparedStatement st = connenction.prepareStatement(sqlQueryMember);
+            ResultSet dataMember = st.executeQuery();
+            if (dataMember.first()) {
+                JOptionPane.showMessageDialog(this, "ID Member "+dataMember.getString("nama"),  "ID MEMBER", JOptionPane.PLAIN_MESSAGE);
+
+            }else{
+                
+                JOptionPane.showMessageDialog(this, "ID Member tidak terdaftar!",  "ID MEMBER", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormTransaksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnHapus1btnSimpanActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btnBatalTransaksi;
     private com.k33ptoo.components.KButton btnCetakStuk;
     private com.k33ptoo.components.KButton btnHapus;
+    private com.k33ptoo.components.KButton btnHapus1;
     private com.k33ptoo.components.KButton btnHapusSemua;
     private com.k33ptoo.components.KButton btnHitung;
     private com.k33ptoo.components.KButton btnUlangi;
