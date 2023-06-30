@@ -22,7 +22,7 @@ public class Koneksi {
         try {
             String url = "jdbc:mysql://localhost:3306/salon";
             String user = "root";
-            String password = "";
+            String password = "123";
 
             Connection conn = DriverManager.getConnection(url, user, password);
 

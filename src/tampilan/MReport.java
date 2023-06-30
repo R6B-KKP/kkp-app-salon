@@ -13,21 +13,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
 import java.io.File;
-<<<<<<< HEAD
-import java.sql.ResultSet; 
-import java.util.HashMap;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.util.*;
-import net.sf.jasperreports.view.*;
-=======
-import java.sql.ResultSet;
+
 import java.util.HashMap;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
->>>>>>> b32fa774737095d902eca5c57faec5388b4365bc
 
 
 /**

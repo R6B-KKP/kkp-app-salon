@@ -1,71 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="db8a6ccb-ea2e-4e8f-9633-30aac8a0e2ab">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT
-     transaksi.`id` AS transaksi_id,
-     transaksi.`id_member` AS transaksi_id_member,
-     transaksi.`id_karyawan` AS transaksi_id_karyawan,
-     transaksi.`total_harga` AS transaksi_total_harga,
-     transaksi.`tanggal` AS transaksi_tanggal,
-     transaksi_detail.`id` AS transaksi_detail_id,
-     transaksi_detail.`id_layanan` AS transaksi_detail_id_layanan,
-     transaksi_detail.`id_transaksi` AS transaksi_detail_id_transaksi,
-     voucher.`kode_voucher` AS voucher_kode_voucher,
-     voucher.`deleted` AS voucher_deleted,
-     voucher.`kode_promo` AS voucher_kode_promo
-FROM
-     `transaksi` transaksi INNER JOIN `transaksi_detail` transaksi_detail ON transaksi.`id` = transaksi_detail.`id_transaksi`,
-     `voucher` voucher]]>
+	<parameter name="start_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="end_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select t.id transaksi_id, m.nama member, t.total_harga, t.tanggal, IF(t.id_voucher, t.id_voucher, "-") voucher, count(td.id_layanan) as layanan from transaksi t
+join member m on m.id = t.id_member
+join karyawan k on k.id = t.id_karyawan
+join transaksi_detail td on td.id_transaksi = t.id 
+where t.tanggal between $P{start_date} and $P{end_date}
+group by t.id;]]>
 	</queryString>
 	<field name="transaksi_id" class="java.lang.Integer"/>
-	<field name="transaksi_id_member" class="java.lang.Integer"/>
-	<field name="transaksi_id_karyawan" class="java.lang.Integer"/>
-	<field name="transaksi_total_harga" class="java.lang.Integer"/>
-	<field name="transaksi_tanggal" class="java.sql.Date"/>
-	<field name="transaksi_detail_id" class="java.lang.Integer"/>
-	<field name="transaksi_detail_id_layanan" class="java.lang.Integer"/>
-	<field name="transaksi_detail_id_transaksi" class="java.lang.Integer"/>
-	<field name="voucher_kode_voucher" class="java.lang.String"/>
-	<field name="voucher_deleted" class="java.lang.Integer"/>
-	<field name="voucher_kode_promo" class="java.lang.String"/>
+	<field name="member" class="java.lang.String"/>
+	<field name="total_harga" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="voucher" class="java.lang.String"/>
+	<field name="layanan" class="java.lang.Long"/>
 	<background>
-		<band height="575" splitType="Stretch">
-			<image vAlign="Bottom">
-				<reportElement mode="Opaque" x="0" y="234" width="85" height="241" backcolor="#000000" uuid="0568f841-8d12-41f3-a1e9-fa634acbccb7"/>
-				<imageExpression><![CDATA["silhouette2.jpg"]]></imageExpression>
-			</image>
-			<rectangle>
-				<reportElement x="-20" y="234" width="20" height="241" backcolor="#000000" uuid="a7d3436b-6dcf-4ffb-88ff-3d763dc575c1"/>
-				<graphicElement>
-					<pen lineWidth="0.0"/>
-				</graphicElement>
-			</rectangle>
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="475" width="105" height="100" backcolor="#666666" uuid="9edbde5a-53d2-4d43-b95f-b0414340db1b"/>
-				<textField>
-					<reportElement style="Column header" x="0" y="0" width="104" height="73" forecolor="#000000" uuid="eabe5a31-c215-41c9-84e1-0b69522a0231"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="58" isBold="true" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="0" y="77" width="104" height="20" forecolor="#000000" uuid="45212e9d-ea44-4ba7-b7c6-1858d48935ab"/>
-					<box leftPadding="4" rightPadding="4"/>
-					<textElement textAlignment="Center">
-						<font size="16" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<line>
-					<reportElement mode="Transparent" x="42" y="73" width="20" height="1" backcolor="#FFFFFF" uuid="97f8cc21-b8f6-4185-bdfc-859421e8e6c4"/>
-				</line>
-			</frame>
-		</band>
+		<band height="575" splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="104" splitType="Stretch">
@@ -90,110 +57,64 @@ FROM
 	</pageHeader>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="97" y="5" width="705" height="20" backcolor="#666666" uuid="b982b3e3-6025-4201-9097-e7a460ae6129"/>
-				<staticText>
-					<reportElement style="Column header" x="0" y="0" width="64" height="15" uuid="33d9484d-5042-4957-8189-564af564f72f"/>
-					<text><![CDATA[transaksi_id]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="64" y="0" width="64" height="15" uuid="1af8f677-09fb-4969-b39b-73595be902db"/>
-					<text><![CDATA[transaksi_id_member]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="128" y="0" width="64" height="15" uuid="f2231c14-92e3-4d13-bd61-8830a70a73c9"/>
-					<text><![CDATA[transaksi_id_karyawan]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="192" y="0" width="64" height="15" uuid="83941d1b-c67a-414f-87d4-79ab11d7b4b4"/>
-					<text><![CDATA[transaksi_total_harga]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="256" y="0" width="64" height="15" uuid="fc75183a-73f7-4e68-802f-2937ce8cfff2"/>
-					<text><![CDATA[transaksi_tanggal]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="320" y="0" width="64" height="15" uuid="d0810d8f-40c7-40c2-95e8-7f232191a01f"/>
-					<text><![CDATA[transaksi_detail_id]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="384" y="0" width="64" height="15" uuid="d4f8d827-df4e-4ea5-9acb-6028f8282cbc"/>
-					<text><![CDATA[transaksi_detail_id_layanan]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="448" y="0" width="64" height="15" uuid="c2d2f651-b917-43cc-b4af-aef8ffd0202d"/>
-					<text><![CDATA[transaksi_detail_id_transaksi]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="512" y="0" width="64" height="15" uuid="81502bc5-cbc8-4380-82b2-d6ec24e9fffa"/>
-					<text><![CDATA[voucher_kode_voucher]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="576" y="0" width="64" height="15" uuid="c17d2325-c221-463d-aa7c-43ad16aa9c26"/>
-					<text><![CDATA[voucher_deleted]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="Column header" x="640" y="0" width="64" height="15" uuid="e6374943-b725-4d64-bd26-06298791b960"/>
-					<text><![CDATA[voucher_kode_promo]]></text>
-				</staticText>
-			</frame>
+			<staticText>
+				<reportElement x="0" y="0" width="133" height="20" uuid="04ff7e4e-31c8-4c12-853a-0b57701c144e"/>
+				<text><![CDATA[transaksi_id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="133" height="20" uuid="cb48f8e5-0fb0-4e49-9d8a-cf75a0986f84"/>
+				<text><![CDATA[member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="133" height="20" uuid="1c97248a-6c88-4866-a406-b732507ae222"/>
+				<text><![CDATA[total_harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="0" width="133" height="20" uuid="ff8355cd-6804-4dd1-922a-646e9497d864"/>
+				<text><![CDATA[tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="0" width="133" height="20" uuid="6a57007e-754d-40f1-8884-b8d217abdb68"/>
+				<text><![CDATA[voucher]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="0" width="133" height="20" uuid="9bb77847-ebaf-4ea2-aaa8-0b7f3a2141f5"/>
+				<text><![CDATA[layanan]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
-			<frame>
-				<reportElement x="97" y="1" width="705" height="15" uuid="76460a83-07cf-45b6-bfda-fb7f7b5de93f"/>
-				<textField>
-					<reportElement style="Detail" x="0" y="0" width="64" height="15" uuid="beb58cf9-26d0-462e-b0d1-b695df5b214e"/>
-					<textFieldExpression><![CDATA[$F{transaksi_id}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="64" y="0" width="64" height="15" uuid="3db71682-eec8-4b8a-8310-a956543d80b6"/>
-					<textFieldExpression><![CDATA[$F{transaksi_id_member}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="128" y="0" width="64" height="15" uuid="0e0d8ee7-4d0a-442e-becc-5e01dd5c9cff"/>
-					<textFieldExpression><![CDATA[$F{transaksi_id_karyawan}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="192" y="0" width="64" height="15" uuid="739e7749-e66c-4a16-889b-4960899b259c"/>
-					<textFieldExpression><![CDATA[$F{transaksi_total_harga}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="256" y="0" width="64" height="15" uuid="83bf7194-09a2-4e6e-97fa-3b5f30e6ac40"/>
-					<textFieldExpression><![CDATA[$F{transaksi_tanggal}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="320" y="0" width="64" height="15" uuid="dc23a42b-614e-48fd-b828-20d5689dabe7"/>
-					<textFieldExpression><![CDATA[$F{transaksi_detail_id}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="384" y="0" width="64" height="15" uuid="3ae0a4b9-13eb-4ee9-98e6-29e306b5610f"/>
-					<textFieldExpression><![CDATA[$F{transaksi_detail_id_layanan}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="448" y="0" width="64" height="15" uuid="d4ba485f-7499-490d-b19d-6ad259d2618c"/>
-					<textFieldExpression><![CDATA[$F{transaksi_detail_id_transaksi}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="512" y="0" width="64" height="15" uuid="7fa7f6e4-e160-48f4-8b1c-2d84fbf0074d"/>
-					<textFieldExpression><![CDATA[$F{voucher_kode_voucher}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="576" y="0" width="64" height="15" uuid="7f35a029-16cf-4721-b098-93c7d8387d01"/>
-					<textFieldExpression><![CDATA[$F{voucher_deleted}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Detail" x="640" y="0" width="64" height="15" uuid="2082f962-a988-4eac-8bbe-6818bb956acb"/>
-					<textFieldExpression><![CDATA[$F{voucher_kode_promo}]]></textFieldExpression>
-				</textField>
-			</frame>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="97" y="16" width="705" height="1" uuid="5f1e6ea0-ca7d-43a2-b31c-88d2594b0409"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="0" y="0" width="133" height="20" uuid="0b33e22b-9e81-4043-b390-0e8dc2e5c52e"/>
+				<textFieldExpression><![CDATA[$F{transaksi_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="0" width="133" height="20" uuid="7836cdd8-1d1c-4d8b-84f2-3033e0933b29"/>
+				<textFieldExpression><![CDATA[$F{member}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="133" height="20" uuid="4efffe99-5d8a-4b79-9c83-a757fdb77430"/>
+				<textFieldExpression><![CDATA[$F{total_harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="0" width="133" height="20" uuid="cb36bfe3-6b41-4f07-8fc2-2e006e428de4"/>
+				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="532" y="0" width="133" height="20" uuid="ef20cc0e-652b-452c-90d8-ca1b0912b829"/>
+				<textFieldExpression><![CDATA[$F{voucher}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="665" y="0" width="133" height="20" uuid="f8bfb28e-bd59-4b04-9de5-00eeefc7c69d"/>
+				<textFieldExpression><![CDATA[$F{layanan}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
