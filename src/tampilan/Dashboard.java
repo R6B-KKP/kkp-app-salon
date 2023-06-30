@@ -43,6 +43,8 @@ public class Dashboard extends javax.swing.JFrame {
         mKategori1.setEnabled(false);
 //        formTransaksi1.setVisible(false);
 //        formTransaksi1.setEnabled(false);
+//        mReport1.setVisible(false);
+//        mReport1.setEnabled(false);
         lblNamaAdmin.setText(karyawan.getNama());
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         lblFooter.setForeground(Color.white);
@@ -140,6 +142,9 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
                                 break;
                             case 1:
                                 karyawan1.setVisible(false);
@@ -155,6 +160,9 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
                                 break;
                             case 2:
                                 karyawan1.setVisible(false);
@@ -167,6 +175,9 @@ public class Dashboard extends javax.swing.JFrame {
                                 mLayanan1.setEnabled(false);
                                 mKategori1.setVisible(true);
                                 mKategori1.setEnabled(true);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
                                 break;
                             case 3:
                                 karyawan1.setVisible(false);
@@ -181,6 +192,9 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
                                 
                                 mLayanan1.initComboBox();
                                 break;
@@ -197,6 +211,10 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setEnabled(false);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
+                                
                                 break;
                             case 5:
                                 karyawan1.setVisible(false);
@@ -209,6 +227,10 @@ public class Dashboard extends javax.swing.JFrame {
                                 mLayanan1.setEnabled(false);
                                 formPromo1.setVisible(false);
                                 formPromo1.setEnabled(false);
+                                
+                                mReport1.setVisible(true);
+                                mReport1.setEnabled(true);
+                                
                                 break;
                             case 6:
                                 karyawan1.setVisible(false);
@@ -223,6 +245,10 @@ public class Dashboard extends javax.swing.JFrame {
                                 formPromo1.setEnabled(true);
                                 mKategori1.setVisible(false);
                                 mKategori1.setEnabled(false);
+                                
+                                mReport1.setVisible(false);
+                                mReport1.setEnabled(false);
+                                
                                 break;
                             case 7:
                                 dispose();
@@ -262,6 +288,7 @@ public class Dashboard extends javax.swing.JFrame {
         mLayanan1 = new tampilan.MLayanan();
         formPromo1 = new tampilan.FormPromo();
         mKategori1 = new tampilan.MKategori();
+        mReport1 = new tampilan.MReport();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1280, 1000));
@@ -335,6 +362,7 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().add(mLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         getContentPane().add(formPromo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         getContentPane().add(mKategori1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(mReport1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -405,6 +433,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblNamaAdmin;
     private tampilan.MKategori mKategori1;
     private tampilan.MLayanan mLayanan1;
+    private tampilan.MReport mReport1;
     private tampilan.Member member1;
     private javax.swing.JLabel sideBar;
     // End of variables declaration//GEN-END:variables
