@@ -1,15 +1,21 @@
 
 package model;
 
+import java.sql.*;
+
+
 public class LayananEntity {
     private int id;
     private String nama;
     private int price;
+    private Blob gambar;
 
-    public LayananEntity(int id, String nama, int price) {
+
+    public LayananEntity(int id, String nama, int price, Blob gambar) {
         this.id = id;
         this.nama = nama;
         this.price = price;
+        this.gambar = gambar;
     }
 
     public LayananEntity() {
@@ -39,5 +45,11 @@ public class LayananEntity {
         this.price = price;
     }
     
-    
+    public Blob getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(Blob gambar) {
+        this.gambar = gambar;
+    } 
 }
