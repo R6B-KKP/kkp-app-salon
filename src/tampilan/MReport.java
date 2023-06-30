@@ -13,11 +13,21 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
 import java.io.File;
+<<<<<<< HEAD
 import java.sql.ResultSet; 
 import java.util.HashMap;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.*;
 import net.sf.jasperreports.view.*;
+=======
+import java.sql.ResultSet;
+import java.util.HashMap;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+>>>>>>> b32fa774737095d902eca5c57faec5388b4365bc
 
 
 /**
@@ -313,6 +323,29 @@ public class MReport extends javax.swing.JPanel {
 
     private void btnBatal5btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatal5btnBatalActionPerformed
         // TODO add your handling code here:
+        Date stdate = new java.sql.Date(rTransaksiStart.getDate().getTime());
+        Date enddate = new java.sql.Date(rTransaksiEnd.getDate().getTime());
+        
+        try{
+        
+        String namaFile = "src/report/lapTransaksi.jasper";
+        HashMap parameter = new HashMap();
+        
+        parameter.put ("start_date" ,stdate.toString());
+        parameter.put ("end_date" ,enddate.toString());
+        
+            System.out.println(stdate.toString());
+            System.out.println(enddate.toString());
+
+        File report_file = new File(namaFile);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(report_file.getPath());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameter, connenction);
+        JasperViewer. viewReport (jasperPrint, false);//coba
+        JasperViewer.setDefaultLookAndFeelDecorated(true);
+    }catch (Exception e){
+       Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, e);
+    
+        }
     }//GEN-LAST:event_btnBatal5btnBatalActionPerformed
 
 
