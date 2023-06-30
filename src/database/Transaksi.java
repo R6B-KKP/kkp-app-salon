@@ -81,6 +81,13 @@ public class Transaksi {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
                 Thread.sleep((i+2)*100);
+                statement.setString(1, fakeData[i][0]);
+                statement.setString(2, fakeData[i][1]);
+                statement.setString(3, fakeData[i][2]);
+                statement.setString(4, fakeData[i][3]);
+                statement.setDate(5, new java.sql.Date(new java.util.Date().getTime()));
+                statement.setString(6, null);
+
 
                 statement.executeUpdate();
             }
