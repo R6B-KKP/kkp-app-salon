@@ -80,8 +80,7 @@ public class Transaksi {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO "+TABLE_NAME+" values(?,?,?,?,?,?)");
             for (int i = 0; i < fakeData.length; i++) {
-                Thread.sleep((i+2)*100);
-
+                
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

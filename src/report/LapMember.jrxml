@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe4f6809-204c-4b29-9d14-c6d637df31c8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     member.`id` AS member_id,
+     member.`nama` AS member_nama,
+     member.`alamat` AS member_alamat,
+     member.`tgl_lahir` AS member_tgl_lahir,
+     member.`point` AS member_point,
+     member.`notelp` AS member_notelp
+FROM
+     `member` member]]>
+	</queryString>
+	<field name="member_id" class="java.lang.Integer"/>
+	<field name="member_nama" class="java.lang.String"/>
+	<field name="member_alamat" class="java.lang.String"/>
+	<field name="member_tgl_lahir" class="java.sql.Date"/>
+	<field name="member_point" class="java.lang.Integer"/>
+	<field name="member_notelp" class="java.lang.String"/>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Top" isLazy="true" evaluationTime="Report">
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="802" uuid="8c8763c6-709a-44d6-a3b3-93ac28fadf37"/>
+				<imageExpression><![CDATA["https://github.com/R6B-KKP/kkp-app-salon/blob/main/src/asset/1.jpg?raw=true"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="9" y="13" width="263" height="33" uuid="7d1f117f-fa00-4cf1-ac59-82c919fa1f5a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Laporan Member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="204" y="48" width="113" height="22" forecolor="#000000" uuid="cda17f0c-70a5-4aff-9bc5-25ea24830e9b"/>
+				<text><![CDATA[Salon ABC]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="400" y="2" width="92" height="68" uuid="4999a4a3-3903-4185-8524-d04063a4c889"/>
+				<imageExpression><![CDATA["https://github.com/R6B-KKP/kkp-app-salon/blob/main/src/asset/logo-salon-large.png?raw=true"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement style="Title" mode="Transparent" x="0" y="76" width="556" height="1" forecolor="#000000" uuid="906a53c0-4e09-4edb-b81c-4baf83bb3026"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="6" y="12" width="92" height="15" forecolor="#000000" uuid="c9824ad2-0370-4a71-80b6-460177b819f7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="93" y="12" width="92" height="15" forecolor="#000000" uuid="b512a9f6-1254-412c-8cfc-9a270b5e9f4d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="185" y="12" width="92" height="15" forecolor="#000000" uuid="6db96fb9-987b-4669-a277-eb6f048c5852"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="277" y="12" width="92" height="15" forecolor="#000000" uuid="92acaa64-7112-44e1-8a40-4bd86b472668"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tanggal Lahir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="369" y="12" width="92" height="15" forecolor="#000000" uuid="7ff68786-8e2e-46c2-87dc-baef9c2430a9"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Point]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="462" y="12" width="92" height="15" forecolor="#000000" uuid="7c9e02b5-eff9-4382-b3e1-c1fbb91f64cc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nomor Telpon]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="-7" width="555" height="1" uuid="a9799db4-f5bb-4ad5-ae3e-f0bd5d6f3ff9"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="1" y="4" width="92" height="15" uuid="002379a6-dfb3-437e-8cff-6181b7aa4480"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="93" y="3" width="92" height="15" uuid="f67c5c68-35b3-45f6-8b16-7a617d7da31f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="185" y="3" width="92" height="15" uuid="d0545000-c21e-4ac7-b6a4-ec88f2bf7234"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_alamat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="277" y="3" width="92" height="15" uuid="81e354ed-ab60-437d-bee1-16256464dbbf"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_tgl_lahir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="369" y="3" width="92" height="15" uuid="11f7786b-ed0f-42f2-af0b-f08549c70abe"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_point}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="462" y="3" width="92" height="15" uuid="b6878ec3-1407-4467-9b5f-15ebee42c973"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{member_notelp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="3" width="555" height="1" uuid="e0cebd6f-9670-4d85-a7a9-78bb5dda9a59"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="-1" y="3" width="555" height="1" uuid="df038bc1-23e4-4b97-8b9d-30989d9f74dc"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="fd2c9678-e299-4ed7-8f7a-18e3b83e5e3f"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="035efab2-8cec-408d-b713-e8c93aadc6fc"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" forecolor="#FFFFFF" uuid="8d1fa891-bb1b-43cc-9a3f-8810ccb8f085"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
