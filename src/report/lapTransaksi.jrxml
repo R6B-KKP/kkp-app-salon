@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="db8a6ccb-ea2e-4e8f-9633-30aac8a0e2ab">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="164"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
@@ -14,6 +14,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Admin" class="java.lang.String"/>
+	<parameter name="tanggal" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select t.id transaksi_id, m.nama member, t.total_harga, t.tanggal, IF(t.id_voucher, t.id_voucher, "-") voucher, count(td.id_layanan) as layanan from transaksi t
 join member m on m.id = t.id_member
@@ -75,37 +76,37 @@ group by t.id;]]>
 			<staticText>
 				<reportElement x="0" y="0" width="133" height="20" uuid="04ff7e4e-31c8-4c12-853a-0b57701c144e"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[transaksi_id]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="133" y="0" width="133" height="20" uuid="cb48f8e5-0fb0-4e49-9d8a-cf75a0986f84"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[member]]></text>
+				<text><![CDATA[Member]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="266" y="0" width="133" height="20" uuid="1c97248a-6c88-4866-a406-b732507ae222"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[total_harga]]></text>
+				<text><![CDATA[Total Harga]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="399" y="0" width="133" height="20" uuid="ff8355cd-6804-4dd1-922a-646e9497d864"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[tanggal]]></text>
+				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="532" y="0" width="133" height="20" uuid="6a57007e-754d-40f1-8884-b8d217abdb68"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[voucher]]></text>
+				<text><![CDATA[Voucher]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="665" y="0" width="133" height="20" uuid="9bb77847-ebaf-4ea2-aaa8-0b7f3a2141f5"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[layanan]]></text>
+				<text><![CDATA[Layanan]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="52" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="16" width="802" height="1" uuid="5f1e6ea0-ca7d-43a2-b31c-88d2594b0409"/>
 				<graphicElement>
@@ -149,31 +150,27 @@ group by t.id;]]>
 	</columnFooter>
 	<pageFooter>
 		<band height="188" splitType="Stretch">
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="671" y="163" width="131" height="20" forecolor="#000000" uuid="d3880104-f1dc-4eb3-8f5d-d75f361dee0a"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="false"/>
+			<textField>
+				<reportElement x="544" y="149" width="258" height="20" uuid="9396ba70-7f76-4819-aad9-b71bd613a681"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{Admin}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="19" y="163" width="267" height="20" uuid="f6d6dc06-f2d1-464f-8207-01795a286b37"/>
-				<textElement>
+			<textField>
+				<reportElement x="532" y="0" width="248" height="20" uuid="39eafd62-2425-427b-96e5-318055120e30"/>
+				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Silhouette Title Report]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement style="SubTitle" x="532" y="15" width="112" height="31" uuid="a8c8b708-c429-42d9-a1ea-fb9abc08498e"/>
-				<textElement textAlignment="Right">
-					<font size="20"/>
+				<reportElement x="544" y="42" width="258" height="20" uuid="9fe7c005-adb3-413f-94cb-2b0b8ba79a63"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
 				</textElement>
 				<text><![CDATA[Mengetahui]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="544" y="121" width="100" height="20" uuid="6ac441f0-625d-449e-8c6e-77041ac836df"/>
-				<textFieldExpression><![CDATA[$P{Admin}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>

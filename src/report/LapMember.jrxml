@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe4f6809-204c-4b29-9d14-c6d637df31c8">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="2"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="Admin" class="java.lang.String"/>
+	<parameter name="tanggal" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
      member.`id` AS member_id,
@@ -25,26 +27,23 @@ FROM
 	<field name="member_point" class="java.lang.Integer"/>
 	<field name="member_notelp" class="java.lang.String"/>
 	<background>
-		<band height="802" splitType="Stretch">
-			<image scaleImage="FillFrame" hAlign="Center" vAlign="Top" isLazy="true" evaluationTime="Report">
-				<reportElement mode="Transparent" x="0" y="0" width="555" height="802" uuid="8c8763c6-709a-44d6-a3b3-93ac28fadf37"/>
-				<imageExpression><![CDATA["https://github.com/R6B-KKP/kkp-app-salon/blob/main/src/asset/1.jpg?raw=true"]]></imageExpression>
-			</image>
-		</band>
+		<band height="802" splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="86" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="9" y="13" width="263" height="33" uuid="7d1f117f-fa00-4cf1-ac59-82c919fa1f5a"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement style="Title" x="2" y="2" width="128" height="21" uuid="7d1f117f-fa00-4cf1-ac59-82c919fa1f5a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="false"/>
+				</textElement>
 				<text><![CDATA[Laporan Member]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="204" y="48" width="113" height="22" forecolor="#000000" uuid="cda17f0c-70a5-4aff-9bc5-25ea24830e9b"/>
+				<reportElement style="SubTitle" x="204" y="16" width="97" height="22" forecolor="#000000" uuid="cda17f0c-70a5-4aff-9bc5-25ea24830e9b"/>
 				<text><![CDATA[Salon ABC]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="400" y="2" width="92" height="68" uuid="4999a4a3-3903-4185-8524-d04063a4c889"/>
+				<reportElement x="461" y="3" width="92" height="68" uuid="4999a4a3-3903-4185-8524-d04063a4c889"/>
 				<imageExpression><![CDATA["https://github.com/R6B-KKP/kkp-app-salon/blob/main/src/asset/logo-salon-large.png?raw=true"]]></imageExpression>
 			</image>
 			<line>
@@ -53,6 +52,13 @@ FROM
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement style="SubTitle" x="57" y="48" width="398" height="20" uuid="f9f7d265-f80c-4327-a04f-70066a1d46ba"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Jl R. Sanim No.32, Tanah Baru, Kecamatan Beji, Kota Depok, Jawa Barat]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -132,44 +138,23 @@ FROM
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="1" y="3" width="555" height="1" uuid="e0cebd6f-9670-4d85-a7a9-78bb5dda9a59"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="-1" y="3" width="555" height="1" uuid="df038bc1-23e4-4b97-8b9d-30989d9f74dc"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
-	</columnFooter>
 	<pageFooter>
-		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="fd2c9678-e299-4ed7-8f7a-18e3b83e5e3f"/>
+		<band height="145" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="369" y="3" width="85" height="24" uuid="9ead0c54-7b6f-4a75-b6c8-0d0fae564213"/>
 				<textElement textAlignment="Right">
-					<font size="10" isBold="false"/>
+					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<text><![CDATA[Mengetahui]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="317" y="84" width="185" height="20" uuid="9a5404d8-2136-47dc-b53e-554008e68fea"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{Admin}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report">
-				<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="035efab2-8cec-408d-b713-e8c93aadc6fc"/>
-				<textElement>
-					<font size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="0" y="0" width="197" height="20" forecolor="#FFFFFF" uuid="8d1fa891-bb1b-43cc-9a3f-8810ccb8f085"/>
-				<textElement>
-					<font size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			<textField>
+				<reportElement x="453" y="125" width="100" height="20" uuid="9c175748-43df-4e0e-bbfa-d141f4bb756b"/>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

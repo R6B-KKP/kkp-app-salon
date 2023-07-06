@@ -49,6 +49,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         lblFooter.setForeground(Color.white);
         lblFooter.setHorizontalAlignment(SwingConstants.CENTER);
+        mReport1.setKaryawan(karyawan);
         
 //        List<Object> menus = new ArrayList<>();
 

@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -212,7 +213,7 @@ public class FormTransaksi extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -672,13 +673,13 @@ public class FormTransaksi extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelCetak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,10 +792,13 @@ public class FormTransaksi extends javax.swing.JPanel {
         bayar =  Integer.parseInt(txtBayar.getText());
         if (bayar >= totalHarga) {
             kembali =  bayar-totalHarga;
+            java.util.Date currentDate = new java.util.Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy',\n\n 'HH:mm:ss", new Locale("id"));
+            String formattedDate = dateFormat.format(currentDate);
             LocalDateTime waktu = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("'Tanggal : 'EEEE, dd MMMM yyyy', Jam : 'HH:mm:ss");
             String waktuString = waktu.format(formatter);
-            lblWaktu.setText(waktuString);
+            lblWaktu.setText(formattedDate);
             txtDikembalikan.setText(String.format("%,d", kembali));
             txtCetakTransaksi.setText( recordStruk());
             btnCetakStuk.setEnabled(true);
@@ -1083,7 +1087,7 @@ public class FormTransaksi extends javax.swing.JPanel {
                                                        + " \t\t\t\tPpn             : %s\n"
                                                        + " \t\t\t\tTotal           : %,d\n"
                                                        + " \t\t\t\tBayar          : %,d\n"
-                                                       + " \t\t\t\tKembali      : %,d\n"
+                                                       + " \t\t\t\tKembali       : %,d\n"
                                                         , jumlah, "10%", totalHarga, bayar, kembali);
         record = record+transaksi;
         return record;

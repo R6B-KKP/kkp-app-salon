@@ -13,7 +13,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import model.KaryawanEntity;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.*;
@@ -35,7 +37,15 @@ public class MReport extends javax.swing.JPanel {
      */
     public MReport() {
         initComponents();
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/Mreport.png")));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24));
     }
+
+    public void setKaryawan(KaryawanEntity karyawan) {
+        this.karyawan = karyawan;
+    }
+    
+    
     
     public void reset(){
         
@@ -297,10 +307,16 @@ public class MReport extends javax.swing.JPanel {
 
     private void btnBatal4btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatal4btnBatalActionPerformed
         // TODO add your handling code here:
+        java.util.Date currentDate = new java.util.Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id"));
+
+        String formattedDate = dateFormat.format(currentDate);
         try{
         
         String namaFile = "src/report/LapMember.jasper";
         HashMap parameter = new HashMap();
+        parameter.put ("Admin" ,karyawan.getNama());
+        parameter.put ("tanggal" ,formattedDate);
         File report_file = new File(namaFile);
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(report_file.getPath());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameter, connenction);
@@ -316,6 +332,10 @@ public class MReport extends javax.swing.JPanel {
         // TODO add your handling code here:
         Date stdate = new java.sql.Date(rTransaksiStart.getDate().getTime());
         Date enddate = new java.sql.Date(rTransaksiEnd.getDate().getTime());
+        java.util.Date currentDate = new java.util.Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id"));
+
+        String formattedDate = dateFormat.format(currentDate);
         
         try{
         
@@ -325,6 +345,7 @@ public class MReport extends javax.swing.JPanel {
         parameter.put ("start_date" ,stdate.toString());
         parameter.put ("end_date" ,enddate.toString());
         parameter.put ("Admin" ,karyawan.getNama());
+        parameter.put ("tanggal" ,formattedDate);
         
             System.out.println(stdate.toString());
             System.out.println(enddate.toString());

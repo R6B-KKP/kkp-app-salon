@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="030d91cc-539d-4d45-9581-bbef7e155a86">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="23"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -26,7 +26,7 @@ WHERE id = $P{id}]]>
 	<field name="member_notelp" class="java.lang.String"/>
 	<background>
 		<band height="555">
-			<image>
+			<image scaleImage="FillFrame">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="555" uuid="59b566c3-1ae4-4658-87cf-641f2b02f3d7"/>
 				<imageExpression><![CDATA["https://raw.githubusercontent.com/R6B-KKP/kkp-app-salon/main/src/asset/1.jpg"]]></imageExpression>
 			</image>
@@ -35,7 +35,7 @@ WHERE id = $P{id}]]>
 	<title>
 		<band height="150" splitType="Stretch">
 			<image>
-				<reportElement x="340" y="11" width="151" height="129" uuid="734d85b8-aee9-4404-a1c6-53357c1a772d"/>
+				<reportElement x="339" y="11" width="151" height="129" uuid="734d85b8-aee9-4404-a1c6-53357c1a772d"/>
 				<imageExpression><![CDATA["https://raw.githubusercontent.com/R6B-KKP/kkp-app-salon/main/src/asset/logo-salon-large.png"]]></imageExpression>
 			</image>
 		</band>
@@ -159,7 +159,7 @@ WHERE id = $P{id}]]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="210" y="298" width="499" height="34" forecolor="#FFCCCC" uuid="25879e15-f1c7-4666-a9ea-fb16757f7353"/>
+				<reportElement x="202" y="298" width="443" height="34" forecolor="#FFCCCC" uuid="25879e15-f1c7-4666-a9ea-fb16757f7353"/>
 				<textElement>
 					<font fontName="Comic Sans MS" size="18"/>
 				</textElement>
