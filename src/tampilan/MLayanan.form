@@ -111,7 +111,7 @@
                           <Component id="jScrollPane1" min="-2" pref="230" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <EmptySpace pref="57" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -282,13 +282,20 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="287" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel5" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="287" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel5" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" pref="150" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -296,7 +303,7 @@
                           <Component id="txtHarga" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtPoint" alignment="0" max="32767" attributes="0"/>
                           <Component id="label_gambar" min="-2" max="-2" attributes="0"/>
-                          <Component id="cb_kategori" alignment="0" pref="370" max="32767" attributes="0"/>
+                          <Component id="cb_kategori" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="443" max="32767" attributes="0"/>
                   </Group>
@@ -475,27 +482,10 @@
                 <Property name="text" type="java.lang.String" value="Kategori"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_kategori">
+            <Component class="component.ComboBoxCustome" name="cb_kategori">
               <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
-                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
-                      <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
-                    </MatteColorBorder>
-                  </Border>
-                </Property>
+                <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
               </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
