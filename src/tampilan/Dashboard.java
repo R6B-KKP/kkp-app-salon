@@ -6,6 +6,8 @@ import component.sidebar.DrawerItem;
 import component.sidebar.EventDrawer;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -22,6 +24,9 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard(KaryawanEntity karyawan) {
         this.karyawan = karyawan;
         initComponents();
+        setTitle("");
+        Image icon2 = Toolkit.getDefaultToolkit().getImage("src/asset/logo-salon.png");  
+        setIconImage(icon2);
         refreshFrom(new MWelcome());
         lblNamaAdmin.setText(karyawan.getNama());
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
