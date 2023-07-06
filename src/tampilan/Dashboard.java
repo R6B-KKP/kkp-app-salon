@@ -6,17 +6,12 @@ import component.sidebar.DrawerItem;
 import component.sidebar.EventDrawer;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import model.KaryawanEntity;
 
-/**
- *
- * @author Farhan
- */
 public class Dashboard extends javax.swing.JFrame {
 
     private DrawerController drawer;
@@ -24,53 +19,14 @@ public class Dashboard extends javax.swing.JFrame {
     private JLabel lblFooter = new JLabel("@Copyright Kelompok4");
     private KaryawanEntity karyawan;
     
-//    private void selectMenu(class c){
-//        Object menus[] = {member1, formTransaksi1, mKategori1, mLayanan1, karyawan1, null, null}; //null pertama report, null kedua exit.
-//        
-//            
-//    }
-    
     public Dashboard(KaryawanEntity karyawan) {
         this.karyawan = karyawan;
         initComponents();
-        member1.setVisible(false);
-        member1.setEnabled(false);
-        karyawan1.setVisible(false);
-        karyawan1.setEnabled(false);
-        formPromo1.setVisible(false);
-        formPromo1.setEnabled(false);
-        mKategori1.setVisible(false);
-        mKategori1.setEnabled(false);
-//        formTransaksi1.setVisible(false);
-//        formTransaksi1.setEnabled(false);
-//        mReport1.setVisible(false);
-//        mReport1.setEnabled(false);
+        refreshFrom(new MWelcome());
         lblNamaAdmin.setText(karyawan.getNama());
         lblFooter.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         lblFooter.setForeground(Color.white);
         lblFooter.setHorizontalAlignment(SwingConstants.CENTER);
-        mReport1.setKaryawan(karyawan);
-        
-//        List<Object> menus = new ArrayList<>();
-
-//        Object menuMember[] = {"Member", "/asset/group.png", member1};
-//        Object menuTransaksi[] = {"Transaksi", "/asset/transaction-history.png", formTransaksi1};
-//        Object menuKategori[] = {"Kategori Layanan", "/asset/self-service.png", mKategori1};
-//        Object menuLayanan[] = {"Layanan", "/asset/self-service.png", mLayanan1};
-//        Object menuKaryawan[] = {"Karyawan", "/asset/employees.png", karyawan1};
-//        Object menuReport[] = {"Report", "/asset/report.png", null}; //report masih null
-//        Object menuExit[] = {"Exit", "/asset/switch.png", null};
-
-
-//        menus.add(menuMember);
-//        menus.add(menuTransaksi);
-//        menus.add(menuKategori);
-//        menus.add(menuLayanan);
-//        menus.add(menuKaryawan);
-//        menus.add(menuReport);
-//        menus.add(menuExit);
-        
-        
         
         drawer = Drawer.newDrawer(this)
                 .header(new Header())
@@ -131,125 +87,25 @@ public class Dashboard extends javax.swing.JFrame {
                         System.out.println(index);
                         switch (index) {
                             case 0:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(true);
-                                member1.setEnabled(true);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                formPromo1.setVisible(false);
-                                formPromo1.setEnabled(false);
-                                mKategori1.setVisible(false);
-                                mKategori1.setEnabled(false);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
+                                refreshFrom(new Member());
                                 break;
                             case 1:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                formTransaksi1.setVisible(true);
-                                formTransaksi1.setEnabled(true);
-                                formTransaksi1.refreshList();
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                formPromo1.setVisible(false);
-                                formPromo1.setEnabled(false);
-                                mKategori1.setVisible(false);
-                                mKategori1.setEnabled(false);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
+                                refreshFrom(new FormTransaksi(karyawan));
                                 break;
                             case 2:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                mKategori1.setVisible(true);
-                                mKategori1.setEnabled(true);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
+                                refreshFrom(new MKategori());
                                 break;
                             case 3:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(true);
-                                mLayanan1.setEnabled(true);
-                                formPromo1.setVisible(false);
-                                formPromo1.setEnabled(false);
-                                mKategori1.setVisible(false);
-                                mKategori1.setEnabled(false);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
-                                
-                                mLayanan1.initComboBox();
+                                refreshFrom(new MLayanan());
                                 break;
                             case 4:
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                karyawan1.setVisible(true);
-                                karyawan1.setEnabled(true);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                formPromo1.setVisible(false);
-                                formPromo1.setEnabled(false);
-                                mKategori1.setVisible(false);
-                                mKategori1.setEnabled(false);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
-                                
+                                refreshFrom(new Karyawan());
                                 break;
                             case 5:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                formPromo1.setVisible(false);
-                                formPromo1.setEnabled(false);
-                                
-                                mReport1.setVisible(true);
-                                mReport1.setEnabled(true);
-                                
+                                refreshFrom(new MReport(karyawan));
                                 break;
                             case 6:
-                                karyawan1.setVisible(false);
-                                karyawan1.setEnabled(false);
-                                member1.setVisible(false);
-                                member1.setEnabled(false);
-                                formTransaksi1.setVisible(false);
-                                formTransaksi1.setEnabled(false);
-                                mLayanan1.setVisible(false);
-                                mLayanan1.setEnabled(false);
-                                formPromo1.setVisible(true);
-                                formPromo1.setEnabled(true);
-                                mKategori1.setVisible(false);
-                                mKategori1.setEnabled(false);
-                                
-                                mReport1.setVisible(false);
-                                mReport1.setEnabled(false);
-                                
+                                refreshFrom(new FormPromo());
                                 break;
                             case 7:
                                 dispose();
@@ -258,22 +114,17 @@ public class Dashboard extends javax.swing.JFrame {
                             default:
                                 throw new AssertionError();
                         }
-//                        if (index == 0) {
-//                            karyawan1.setVisible(false);
-//                            karyawan1.setEnabled(false);
-//                            member1.setVisible(true);
-//                            member1.setEnabled(true);
-//                        }
-//                        if (index == 3) {
-//                            member1.setVisible(false);
-//                            member1.setEnabled(false);
-//                            karyawan1.setVisible(true);
-//                            karyawan1.setEnabled(true);
-//                        }
                     }
-                })
-                .build();
-        formTransaksi1.setKaryawan(karyawan);
+                }
+            )
+        .build();
+    }
+    
+    public static void refreshFrom(JComponent component){
+        panelForm.removeAll();
+        panelForm.add(component);
+        panelForm.repaint();
+        panelForm.revalidate();
     }
 
     @SuppressWarnings("unchecked")
@@ -283,17 +134,13 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         sideBar = new javax.swing.JLabel();
         lblNamaAdmin = new javax.swing.JLabel();
-        formTransaksi1 = new tampilan.FormTransaksi();
-        member1 = new tampilan.Member();
-        karyawan1 = new tampilan.Karyawan();
-        mLayanan1 = new tampilan.MLayanan();
-        formPromo1 = new tampilan.FormPromo();
-        mKategori1 = new tampilan.MKategori();
-        mReport1 = new tampilan.MReport();
+        panelForm = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1280, 1000));
-        setPreferredSize(new java.awt.Dimension(1280, 1000));
+        setMaximumSize(new java.awt.Dimension(1280, 920));
+        setMinimumSize(new java.awt.Dimension(1280, 920));
+        setPreferredSize(new java.awt.Dimension(1280, 920));
+        setResizable(false);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -353,17 +200,12 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 40));
-        getContentPane().add(formTransaksi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        member1.setBackground(new java.awt.Color(102, 102, 255));
-        getContentPane().add(member1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        karyawan1.setBackground(new java.awt.Color(102, 102, 255));
-        getContentPane().add(karyawan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(mLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(formPromo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(mKategori1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        getContentPane().add(mReport1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelForm.setBackground(new java.awt.Color(0,0,0,0)
+        );
+        panelForm.setOpaque(false);
+        panelForm.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(panelForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1080));
 
         pack();
         setLocationRelativeTo(null);
@@ -392,50 +234,10 @@ public class Dashboard extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        KaryawanEntity kr = new KaryawanEntity();
-//        Dashboard db = new Dashboard(kr);
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                db.setVisible(true);
-//            }
-//        });
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private tampilan.FormPromo formPromo1;
-    private tampilan.FormTransaksi formTransaksi1;
     private javax.swing.JPanel jPanel1;
-    private tampilan.Karyawan karyawan1;
     private javax.swing.JLabel lblNamaAdmin;
-    private tampilan.MKategori mKategori1;
-    private tampilan.MLayanan mLayanan1;
-    private tampilan.MReport mReport1;
-    private tampilan.Member member1;
+    public static javax.swing.JPanel panelForm;
     private javax.swing.JLabel sideBar;
     // End of variables declaration//GEN-END:variables
 }

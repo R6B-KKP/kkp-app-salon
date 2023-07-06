@@ -54,6 +54,9 @@
           <Image iconType="3" name="/asset/logo-salon.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -76,7 +79,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Senyum, Sapa, Ramah"/>
+        <Property name="text" type="java.lang.String" value="Senyum, Salam, Sopan"/>
       </Properties>
     </Component>
   </SubComponents>
