@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="db8a6ccb-ea2e-4e8f-9633-30aac8a0e2ab">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="164"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
@@ -13,6 +13,7 @@
 	<parameter name="end_date" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Admin" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select t.id transaksi_id, m.nama member, t.total_harga, t.tanggal, IF(t.id_voucher, t.id_voucher, "-") voucher, count(td.id_layanan) as layanan from transaksi t
 join member m on m.id = t.id_member
@@ -37,19 +38,33 @@ group by t.id;]]>
 	<title>
 		<band height="104" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="e7aff576-a19f-4987-82e9-94e3749abd79"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="54" isBold="false" pdfFontName="Helvetica"/>
+				<reportElement style="Title" x="0" y="0" width="187" height="41" uuid="e7aff576-a19f-4987-82e9-94e3749abd79"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="22" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[SILHOUETTE TITLE]]></text>
+				<text><![CDATA[Laporan Transaksi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="232" y="67" width="568" height="37" uuid="27d21b39-6a39-4859-adea-abed5d3b7be9"/>
-				<textElement textAlignment="Right">
-					<font size="26"/>
+				<reportElement style="SubTitle" x="165" y="67" width="500" height="20" uuid="27d21b39-6a39-4859-adea-abed5d3b7be9"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
 				</textElement>
-				<text><![CDATA[Silhouette SubTitle]]></text>
+				<text><![CDATA[Jl R. Sanim No.32, Tanah Baru, Kecamatan Beji, Kota Depok, Jawa Barat]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="Title" x="348" y="4" width="120" height="37" uuid="5cf3d764-b92a-421d-9b59-da26162ec16e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Salon ABC]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="692" y="10" width="100" height="83" uuid="57cc74d2-c775-4b0a-859e-b23e17fe3dfd"/>
+				<imageExpression><![CDATA["https://github.com/R6B-KKP/kkp-app-salon/blob/main/src/asset/logo-salon-large.png?raw=true"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="-4" y="101" width="803" height="1" uuid="f333e137-9e84-4d86-a8f5-c95ab1f1570f"/>
+			</line>
 		</band>
 	</title>
 	<pageHeader>
@@ -59,60 +74,72 @@ group by t.id;]]>
 		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="133" height="20" uuid="04ff7e4e-31c8-4c12-853a-0b57701c144e"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[transaksi_id]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="133" y="0" width="133" height="20" uuid="cb48f8e5-0fb0-4e49-9d8a-cf75a0986f84"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[member]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="266" y="0" width="133" height="20" uuid="1c97248a-6c88-4866-a406-b732507ae222"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[total_harga]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="399" y="0" width="133" height="20" uuid="ff8355cd-6804-4dd1-922a-646e9497d864"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[tanggal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="532" y="0" width="133" height="20" uuid="6a57007e-754d-40f1-8884-b8d217abdb68"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[voucher]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="665" y="0" width="133" height="20" uuid="9bb77847-ebaf-4ea2-aaa8-0b7f3a2141f5"/>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[layanan]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="97" y="16" width="705" height="1" uuid="5f1e6ea0-ca7d-43a2-b31c-88d2594b0409"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="16" width="802" height="1" uuid="5f1e6ea0-ca7d-43a2-b31c-88d2594b0409"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<textField>
 				<reportElement x="0" y="0" width="133" height="20" uuid="0b33e22b-9e81-4043-b390-0e8dc2e5c52e"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{transaksi_id}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="133" y="0" width="133" height="20" uuid="7836cdd8-1d1c-4d8b-84f2-3033e0933b29"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{member}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="266" y="0" width="133" height="20" uuid="4efffe99-5d8a-4b79-9c83-a757fdb77430"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{total_harga}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="399" y="0" width="133" height="20" uuid="cb36bfe3-6b41-4f07-8fc2-2e006e428de4"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="532" y="0" width="133" height="20" uuid="ef20cc0e-652b-452c-90d8-ca1b0912b829"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{voucher}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="665" y="0" width="133" height="20" uuid="f8bfb28e-bd59-4b04-9de5-00eeefc7c69d"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{layanan}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -121,21 +148,32 @@ group by t.id;]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="39" splitType="Stretch">
+		<band height="188" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="671" y="0" width="131" height="20" forecolor="#000000" uuid="d3880104-f1dc-4eb3-8f5d-d75f361dee0a"/>
+				<reportElement style="Column header" x="671" y="163" width="131" height="20" forecolor="#000000" uuid="d3880104-f1dc-4eb3-8f5d-d75f361dee0a"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="96" y="0" width="267" height="20" uuid="f6d6dc06-f2d1-464f-8207-01795a286b37"/>
+				<reportElement x="19" y="163" width="267" height="20" uuid="f6d6dc06-f2d1-464f-8207-01795a286b37"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Silhouette Title Report]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="532" y="15" width="112" height="31" uuid="a8c8b708-c429-42d9-a1ea-fb9abc08498e"/>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Mengetahui]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="544" y="121" width="100" height="20" uuid="6ac441f0-625d-449e-8c6e-77041ac836df"/>
+				<textFieldExpression><![CDATA[$P{Admin}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

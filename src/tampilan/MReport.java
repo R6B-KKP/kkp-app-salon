@@ -13,13 +13,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.HeadlessException;
 import java.io.File;
-
 import java.util.HashMap;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
+import model.KaryawanEntity;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.*;
+import net.sf.jasperreports.view.*;
 
 
 /**
@@ -28,6 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class MReport extends javax.swing.JPanel {
     private final Connection connenction = new Koneksi().connect();
+    private KaryawanEntity karyawan;
     private DefaultTableModel tabmode;
     int id = 0;
 
@@ -325,6 +324,7 @@ public class MReport extends javax.swing.JPanel {
         
         parameter.put ("start_date" ,stdate.toString());
         parameter.put ("end_date" ,enddate.toString());
+        parameter.put ("Admin" ,karyawan.getNama());
         
             System.out.println(stdate.toString());
             System.out.println(enddate.toString());
