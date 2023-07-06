@@ -51,6 +51,7 @@ public class FormTransaksi extends javax.swing.JPanel {
     public static final String TABLE_NAME = "member";
     private final Connection connenction = new Koneksi().connect();
     private DefaultTableModel tabmode;
+    private int diskon, diskonUpTo, diskonPercent, tempTotalHarga = 0; 
 
     public FormTransaksi() {
         initComponents();
@@ -170,6 +171,10 @@ public class FormTransaksi extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         txtTotalHarga1 = new javax.swing.JTextField();
         btnHapus1 = new com.k33ptoo.components.KButton();
+        txtVoucher = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        btnHapus2 = new com.k33ptoo.components.KButton();
+        vc_status = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnCetakStuk = new com.k33ptoo.components.KButton();
         btnUlangi = new com.k33ptoo.components.KButton();
@@ -492,6 +497,43 @@ public class FormTransaksi extends javax.swing.JPanel {
             }
         });
 
+        txtVoucher.setBackground(new java.awt.Color(0,0,0,20)
+        );
+        txtVoucher.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        txtVoucher.setForeground(new java.awt.Color(255, 255, 255));
+        txtVoucher.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        txtVoucher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVoucherActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Kode Voucher");
+
+        btnHapus2.setText("CEK VOUCHER");
+        btnHapus2.setAlignmentY(0.0F);
+        btnHapus2.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
+        btnHapus2.setkEndColor(new java.awt.Color(255, 248, 200));
+        btnHapus2.setkHoverEndColor(new java.awt.Color(255, 160, 0));
+        btnHapus2.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        btnHapus2.setkHoverStartColor(new java.awt.Color(255, 248, 200));
+        btnHapus2.setkSelectedColor(new java.awt.Color(255, 255, 255));
+        btnHapus2.setkStartColor(new java.awt.Color(255, 160, 0));
+        btnHapus2.setMargin(new java.awt.Insets(1, 8, 1, 8));
+        btnHapus2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapus2btnSimpanActionPerformed(evt);
+            }
+        });
+
+        vc_status.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        vc_status.setForeground(new java.awt.Color(255, 102, 102));
+        vc_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vc_status.setText("Kode Voucher Tidak Berlaku");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -509,7 +551,8 @@ public class FormTransaksi extends javax.swing.JPanel {
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -523,9 +566,14 @@ public class FormTransaksi extends javax.swing.JPanel {
                                     .addComponent(txtDikembalikan)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTotalHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(vc_status, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtVoucher, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(txtTotalHarga1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(btnHapus2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -536,7 +584,14 @@ public class FormTransaksi extends javax.swing.JPanel {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotalHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHapus2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(vc_status, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(btnHapusSemua, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -754,9 +809,11 @@ public class FormTransaksi extends javax.swing.JPanel {
             try {
                 String sqlQueryTransaksi = "INSERT INTO "+ database.Transaksi.TABLE_NAME +" values(?,?,?,?,?,?)";
                 String sqlQueryTransaksiDetail = "INSERT INTO "+ database.TransaksiDetail.TABLE_NAME +"(id_layanan, id_transaksi) values (?, ?)";
-
+                String sqlVoucher = "UPDATE "+database.Voucher.TABLE_NAME+" SET deleted = 1 where kode_voucher = '"+txtVoucher.getText()+"';";
+                
                 PreparedStatement stat = null;
                 PreparedStatement stat2 = null;
+                PreparedStatement stat3 = null;
 
                 //Transaksi
                 stat = connenction.prepareStatement(sqlQueryTransaksi, Statement.RETURN_GENERATED_KEYS);
@@ -802,6 +859,13 @@ public class FormTransaksi extends javax.swing.JPanel {
                         
                     }
                 }
+                
+                
+                //Voucher
+                if (diskonPercent != 0) {
+                    stat3 = connenction.prepareStatement(sqlVoucher);
+                    stat3.executeUpdate();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(FormTransaksi.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -835,18 +899,77 @@ public class FormTransaksi extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnHapus1btnSimpanActionPerformed
     
+    private void hitungDiskon(int harga){
+        diskon = diskonPercent * harga / 100;
+        
+        if (diskon >= diskonUpTo) {
+            diskon = diskonUpTo;
+        }
+        
+        tempTotalHarga = totalHarga;
+        
+        totalHarga -= diskon;
+        txtTotalHarga.setText(txtTotalHarga.getText()+" ("+String.format("%,d",totalHarga)+")");
+    }
+    
+    private void batalDiskon(){
+        if (tempTotalHarga > totalHarga) {
+            totalHarga = tempTotalHarga;
+            txtTotalHarga.setText(String.format("%,d",totalHarga));
+        }
+    }
+    
+    private void btnHapus2btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapus2btnSimpanActionPerformed
+        // TODO add your handling code here:
+        String voucher = txtVoucher.getText();
+        String sql = "select "+database.Voucher.TABLE_NAME+".*, "+database.Promo.TABLE_NAME+".* from "+database.Voucher.TABLE_NAME
+                +" join "+database.Promo.TABLE_NAME+" on "+database.Promo.TABLE_NAME+"."+database.Promo.KODE_PROMO+" = "+database.Voucher.TABLE_NAME+"."+database.Voucher.KODE_PROMO
+                +" where "+database.Voucher.TABLE_NAME+"."+database.Voucher.KODE_VOUCHER+" = '"+voucher+"' AND deleted = 0;"
+                + " ;";
+        try {
+            java.sql.Statement stat = connenction.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            if (hasil.next()) {
+                String vc = hasil.getString(database.Voucher.TABLE_NAME+".kode_voucher");
+                if (voucher.equals(vc)) {
+                    diskonPercent = hasil.getInt(database.Promo.TABLE_NAME+".diskon");
+                    diskonUpTo = hasil.getInt(database.Promo.TABLE_NAME+".max_diskon");
+                    hitungDiskon(totalHarga);
+                    vc_status.setText("Voucher Berlaku, diskon : "+diskon);
+                    vc_status.setForeground(Color.green);
+                }
+            }else{
+                vc_status.setText("Voucher Tidak Berlaku");
+                vc_status.setForeground(Color.red);
+                diskonPercent = 0;
+                diskonUpTo = 0;
+                batalDiskon();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DATA VOUCHER :  "+e);
+        }
+        
+    }//GEN-LAST:event_btnHapus2btnSimpanActionPerformed
+
+    private void txtVoucherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVoucherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtVoucherActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btnBatalTransaksi;
     private com.k33ptoo.components.KButton btnCetakStuk;
     private com.k33ptoo.components.KButton btnHapus;
     private com.k33ptoo.components.KButton btnHapus1;
+    private com.k33ptoo.components.KButton btnHapus2;
     private com.k33ptoo.components.KButton btnHapusSemua;
     private com.k33ptoo.components.KButton btnHitung;
     private com.k33ptoo.components.KButton btnUlangi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -873,6 +996,8 @@ public class FormTransaksi extends javax.swing.JPanel {
     private javax.swing.JTextField txtDikembalikan;
     private javax.swing.JTextField txtTotalHarga;
     private javax.swing.JTextField txtTotalHarga1;
+    private javax.swing.JTextField txtVoucher;
+    private javax.swing.JLabel vc_status;
     // End of variables declaration//GEN-END:variables
 
     private void dataCart(){
